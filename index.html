@@ -6,7 +6,7 @@
     <title>For You ❤️</title>
     <style>
         body { 
-            background: radial-gradient(circle, #100005 0%, #000000 100%); 
+            background: radial-gradient(circle, #0a0003 0%, #000000 100%); 
             overflow: hidden; 
             margin: 0; 
             font-family: 'Pyidaungsu', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -83,63 +83,57 @@
             z-index: 10;
         }
 
-        /* 🔋 ⚡ အလယ်က အားသွင်းနီယွန်အသည်းပုံ ဒီဇိုင်းကြီး */
-        .charging-heart-box {
+        /* ⚡ 💡 Cyber Neon Heart အလယ်က ကွန်တိန်နာ */
+        .neon-heart-wrapper {
             position: relative;
-            width: 250px;
-            height: 250px;
+            width: 280px;
+            height: 280px;
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-bottom: 20px;
         }
 
-        /* SVG အသည်းပုံကို ရောင်စုံနီယွန် Glow ဖြစ်စေခြင်း */
-        .heart-svg {
+        /* စစ်မှန်သော နီယွန်မီးချောင်း အကျိုးသက်ရောက်မှု */
+        .neon-heart-svg {
             width: 100%;
             height: 100%;
-            filter: drop-shadow(0 0 25px var(--glow-color, #ff2a55));
-            animation: pulseGlow 2s infinite alternate, colorShift 8s infinite linear;
+            fill: none;
+            stroke: var(--neon-color, #ff0055);
+            stroke-width: 1.5;
+            stroke-linecap: round;
+            /* ဆန်းပြားသော နီယွန်အလင်းတန်း ၃ ထပ်ပေးထားခြင်း */
+            filter: drop-shadow(0 0 5px var(--neon-color, #ff0055))
+                    drop-shadow(0 0 15px var(--neon-color, #ff0055))
+                    drop-shadow(0 0 35px var(--neon-color, #ff0055));
+            animation: pulseGlow 1.5s infinite alternate ease-in-out, neonFlicker 4s infinite linear;
         }
 
-        /* အသည်းပုံအတွင်းပိုင်း အားသွင်းလှိုင်း Animation */
-        .wave-fill {
-            animation: waveAnim 3s infinite linear;
-        }
-
-        @keyframes waveAnim {
-            0% { transform: translateY(0) translateX(0); }
-            50% { transform: translateY(-5px) translateX(-20px); }
-            100% { transform: translateY(0) translateX(-40px); }
-        }
-
-        /* ⚡ လျှပ်စီးအလင်းတန်း Icon */
-        .lightning-bolt {
+        /* ⚡ လျှပ်စီး Icon နေရာချခြင်း */
+        .neon-lightning {
             position: absolute;
-            bottom: -35px;
-            font-size: 3.5rem;
-            color: #ffd670;
-            filter: drop-shadow(0 0 15px #ffd670);
-            animation: flash 1s infinite alternate;
-        }
-
-        @keyframes flash {
-            0% { opacity: 0.6; transform: scale(0.9); }
-            100% { opacity: 1; transform: scale(1.1); }
+            bottom: -20px;
+            font-size: 4rem;
+            color: #fff;
+            animation: boltFlicker 2s infinite alternate ease-in-out;
         }
 
         @keyframes pulseGlow {
-            0% { transform: scale(1); }
-            100% { transform: scale(1.05); }
+            0% { transform: scale(1); opacity: 0.9; }
+            100% { transform: scale(1.08); opacity: 1; }
         }
 
-        /* အရောင်စုံကို အလိုအလျောက် ပြောင်းလဲစေသောစနစ် */
-        @keyframes colorShift {
-            0% { --glow-color: #ff2a55; }
-            25% { --glow-color: #00f0ff; }
-            50% { --glow-color: #bd00ff; }
-            75% { --glow-color: #00ff66; }
-            100% { --glow-color: #ff2a55; }
+        /* မီးချောင်း တဖျတ်ဖျတ်လက်သည့် အထာကျသော စတိုင်လ် */
+        @keyframes neonFlicker {
+            0%, 100% { opacity: 1; }
+            41% { opacity: 0.95; }
+            42% { opacity: 1; }
+            43% { opacity: 0.85; }
+            44% { opacity: 1; }
+        }
+
+        @keyframes boltFlicker {
+            0% { color: #00f0ff; filter: drop-shadow(0 0 10px #00f0ff) drop-shadow(0 0 25px #00f0ff); transform: scale(0.95) rotate(-5deg); }
+            100% { color: #ff00ff; filter: drop-shadow(0 0 15px #ff00ff) drop-shadow(0 0 35px #ff00ff); transform: scale(1.05) rotate(5deg); }
         }
         
         .love-text {
@@ -149,7 +143,7 @@
             font-weight: bold;
             text-shadow: 0 0 20px rgba(0,0,0,1);
             pointer-events: none;
-            margin-top: 40px;
+            margin-top: 45px;
         }
 
         .sub-text {
@@ -159,7 +153,7 @@
             text-shadow: 0 0 15px rgba(0,0,0,1);
         }
 
-        /* ဘေးပတ်လည်က ရောင်စုံမှိတ်တုတ်မှိတ်တုတ် ကျဆင်းမည့် အရာများ */
+        /* ဘေးပတ်လည်က ရောင်စုံမှိတ်တုတ်မှိတ်တုတ် ကျဆင်းမည့် စာသားများ */
         .falling-element { 
             position: absolute; 
             user-select: none;
@@ -191,27 +185,19 @@
         <canvas id="starfield"></canvas>
         
         <div class="center-container">
-            <!-- 🔋 ⚡ အားသွင်းဒီဇိုင်း နီယွန်အသည်းပုံဖွဲ့စည်းမှု -->
-            <div class="charging-heart-box">
-                <svg class="heart-svg" viewBox="0 0 32 32">
-                    <defs>
-                        <linearGradient id="grad" x1="0%" y1="100%" x2="0%" y2="0%">
-                            <stop offset="0%" stop-color="#ff2a55" />
-                            <stop offset="40%" stop-color="#ff70a6" />
-                            <stop offset="41%" stop-color="transparent" />
-                            <stop offset="100%" stop-color="transparent" />
-                        </linearGradient>
-                    </defs>
-                    <!-- အသည်းပုံ Outline အပြင်ဘောင် -->
-                    <path d="M16,28.261L4.636,16.897C1.411,13.672,1.411,8.435,4.636,5.21c3.225-3.225,8.462-3.225,11.364,0 l0,0l0,0c2.902-3.225,8.139-3.225,11.364,0c3.225,3.225,3.225,8.462,0,11.687L16,28.261z" 
-                          fill="url(#grad)" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+            <!-- ⚡ 💡 Cyber Neon Heart အလယ်ဗဟိုဖွဲ့စည်းမှု -->
+            <div class="neon-heart-wrapper">
+                <svg class="neon-heart-svg" viewBox="0 0 32 32">
+                    <!-- တိကျလှပသော Vector နီယွန်အသည်းပုံလမ်းကြောင်း -->
+                    <path d="M16,28.261L4.636,16.897C1.411,13.672,1.411,8.435,4.636,5.21c3.225-3.225,8.462-3.225,11.364,0 c2.902-3.225,8.139-3.225,11.364,0c3.225,3.225,3.225,8.462,0,11.687L16,28.261z" 
+                          stroke-width="1.2" stroke-linejoin="round"/>
                     <!-- အောက်ခြေ အားသွင်းအဆင့်လိုင်းတိုလေးများ -->
-                    <line x1="12" y1="21" x2="20" y2="21" stroke="white" stroke-width="1"/>
-                    <line x1="13" y1="23" x2="19" y2="23" stroke="white" stroke-width="1"/>
-                    <line x1="14" y1="25" x2="18" y2="25" stroke="white" stroke-width="1"/>
+                    <line x1="11" y1="20" x2="21" y2="20" stroke="white" stroke-width="0.8" opacity="0.8"/>
+                    <line x1="12.5" y1="22" x2="19.5" y2="22" stroke="white" stroke-width="0.8" opacity="0.6"/>
+                    <line x1="14" y1="24" x2="18" y2="24" stroke="white" stroke-width="0.8" opacity="0.4"/>
                 </svg>
-                <!-- ⚡ လျှပ်စီးအလင်း -->
-                <div class="lightning-bolt">⚡</div>
+                <!-- ⚡ နီယွန် လျှပ်စီး -->
+                <div class="neon-lightning">⚡</div>
             </div>
 
             <div class="love-text">
@@ -226,8 +212,8 @@
     </audio>
 
     <script>
-        // ကောင်မလေး သဘောကျမည့် နီယွန်အရောင်စုံ ရှစ်မျိုး
-        const colors = ['#ff1a40', '#00f0ff', '#bd00ff', '#ffd670', '#00ff66', '#ff70a6', '#ff9770', '#e9ff70'];
+        // Cyberpunk ဆန်သော တောက်ပသည့် နီယွန်ရောင်စုံ ခြောက်မျိုး
+        const neonColors = ['#ff0055', '#00f0ff', '#bd00ff', '#00ff66', '#ff00aa', '#ffaa00'];
         const romanticShapes = ['❤️', '💖', '💝', '💘', '💕', '💗', '💓', '💞', '🌸', '✨'];
         
         let colorIndex = 0;
@@ -246,19 +232,18 @@
                 animationActive = true;
                 initStarfield();
                 setInterval(createRomanticElement, 250);
-                startDynamicColors();
+                startNeonCycle();
             }, 1000);
         }
 
-        // အလယ်က အသည်းပုံကြီးရဲ့ နီယွန်မီးရောင်ကို စက္ကန့်အလိုက် တစ်ရောင်ပြီးတစ်ရောင် ငြိမ့်ညောင်းစွာ ပြောင်းလဲစေခြင်း
-        function startDynamicColors() {
-            const heartSvg = document.querySelector('.heart-svg');
+        // အလယ်က အသည်းပုံကြီးရဲ့ နီယွန်အရောင်ကို စက္ကန့်အလိုက် ငြိမ့်ညောင်းစွာ စီးဆင်းပြောင်းလဲစေခြင်း
+        function startNeonCycle() {
+            const heartSvg = document.querySelector('.neon-heart-svg');
             let idx = 0;
             setInterval(() => {
-                idx = (idx + 1) % colors.length;
-                heartSvg.style.setProperty('--glow-color', colors[idx]);
-                heartSvg.style.color = colors[idx];
-            }, 2000);
+                idx = (idx + 1) % neonColors.length;
+                heartSvg.style.setProperty('--neon-color', neonColors[idx]);
+            }, 1500);
         }
 
         function createRomanticElement() {
@@ -267,13 +252,24 @@
             item.classList.add('falling-element');
             
             item.innerText = romanticShapes[shapeIndex];
-            const randomColor = colors[colorIndex];
+            const randomColor = neonColors[colorIndex % neonColors.length];
             item.style.color = randomColor;
 
             shapeIndex = (shapeIndex + 1) % romanticShapes.length;
-            colorIndex = (colorIndex + 1) % colors.length;
+            colorIndex = (colorIndex + 1) % neonColors.length;
             
             item.style.left = Math.random() * 92 + 4 + 'vw';
-            item.style.fontSize = Math.random() * 30 + 45 + 'px'; 
+            item.style.fontSize = Math.random() * 25 + 50 + 'px'; 
             
             const duration = Math.random() * 2 + 5;
+            item.style.animationName = 'fall, twinkle';
+            item.style.animationDuration = `${duration}s, ${Math.random() * 0.5 + 0.8}s`;
+            
+            document.body.appendChild(item);
+            setTimeout(() => item.remove(), duration * 1000);
+        }
+
+        function initStarfield() {
+            const canvas = document.getElementById('starfield');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;

@@ -6,7 +6,7 @@
     <title>For You ❤️</title>
     <style>
         body { 
-            background: radial-gradient(circle, #0a0003 0%, #000000 100%); 
+            background: radial-gradient(circle, #0e0003 0%, #000000 100%); 
             overflow: hidden; 
             margin: 0; 
             font-family: 'Pyidaungsu', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -16,7 +16,7 @@
             height: 100vh;
         }
 
-        /* 🎁 စတင်ဖွင့်ချိန်တွင် ပေါ်မည့် Surprise ဘူး ဒီဇိုင်း */
+        /* 🎁 Surprise လက်ဆောင်ဘူးစခရင် */
         .intro-screen {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -83,7 +83,7 @@
             z-index: 10;
         }
 
-        /* ⚡ 💡 Cyber Neon Heart အလယ်က ကွန်တိန်နာ */
+        /* 🔋 ⚡ အလယ်ဗဟို နီယွန်အားသွင်းအသည်းပုံ အိမ်ရာ */
         .neon-heart-wrapper {
             position: relative;
             width: 280px;
@@ -93,7 +93,7 @@
             align-items: center;
         }
 
-        /* စစ်မှန်သော နီယွန်မီးချောင်း အကျိုးသက်ရောက်မှု */
+        /* စစ်မှန်သော ကာတွန်းနီယွန်မီးချောင်း အကျိုးသက်ရောက်မှု */
         .neon-heart-svg {
             width: 100%;
             height: 100%;
@@ -101,39 +101,29 @@
             stroke: var(--neon-color, #ff0055);
             stroke-width: 1.5;
             stroke-linecap: round;
-            /* ဆန်းပြားသော နီယွန်အလင်းတန်း ၃ ထပ်ပေးထားခြင်း */
-            filter: drop-shadow(0 0 5px var(--neon-color, #ff0055))
-                    drop-shadow(0 0 15px var(--neon-color, #ff0055))
-                    drop-shadow(0 0 35px var(--neon-color, #ff0055));
-            animation: pulseGlow 1.5s infinite alternate ease-in-out, neonFlicker 4s infinite linear;
+            filter: drop-shadow(0 0 8px var(--neon-color, #ff0055))
+                    drop-shadow(0 0 20px var(--neon-color, #ff0055))
+                    drop-shadow(0 0 40px var(--neon-color, #ff0055));
+            animation: pulseGlow 1.5s infinite alternate ease-in-out;
         }
 
-        /* ⚡ လျှပ်စီး Icon နေရာချခြင်း */
+        /* ⚡ နီယွန် လျှပ်စီးအလင်းတန်း Icon */
         .neon-lightning {
             position: absolute;
             bottom: -20px;
-            font-size: 4rem;
+            font-size: 4.5rem;
             color: #fff;
-            animation: boltFlicker 2s infinite alternate ease-in-out;
+            animation: boltFlicker 1.5s infinite alternate ease-in-out;
         }
 
         @keyframes pulseGlow {
             0% { transform: scale(1); opacity: 0.9; }
-            100% { transform: scale(1.08); opacity: 1; }
-        }
-
-        /* မီးချောင်း တဖျတ်ဖျတ်လက်သည့် အထာကျသော စတိုင်လ် */
-        @keyframes neonFlicker {
-            0%, 100% { opacity: 1; }
-            41% { opacity: 0.95; }
-            42% { opacity: 1; }
-            43% { opacity: 0.85; }
-            44% { opacity: 1; }
+            100% { transform: scale(1.06); opacity: 1; }
         }
 
         @keyframes boltFlicker {
-            0% { color: #00f0ff; filter: drop-shadow(0 0 10px #00f0ff) drop-shadow(0 0 25px #00f0ff); transform: scale(0.95) rotate(-5deg); }
-            100% { color: #ff00ff; filter: drop-shadow(0 0 15px #ff00ff) drop-shadow(0 0 35px #ff00ff); transform: scale(1.05) rotate(5deg); }
+            0% { color: #00f0ff; filter: drop-shadow(0 0 10px #00f0ff) drop-shadow(0 0 30px #00f0ff); transform: scale(0.95); }
+            100% { color: #ff00ff; filter: drop-shadow(0 0 15px #ff00ff) drop-shadow(0 0 35px #ff00ff); transform: scale(1.05); }
         }
         
         .love-text {
@@ -153,7 +143,7 @@
             text-shadow: 0 0 15px rgba(0,0,0,1);
         }
 
-        /* ဘေးပတ်လည်က ရောင်စုံမှိတ်တုတ်မှိတ်တုတ် ကျဆင်းမည့် စာသားများ */
+        /* တွဲဖက်ကြွေဆင်းမည့်အရာများ */
         .falling-element { 
             position: absolute; 
             user-select: none;
@@ -177,7 +167,7 @@
     <!-- ၁။ အစဦး Surprise ဘူးစခရင် -->
     <div class="intro-screen" id="introScreen">
         <div class="gift-box" onclick="startSurprise()">🎁</div>
-        <div class="click-text">ယူမီအတွက် Surprise လေးမို့ နှိပ်ကြည့်ပါဦး...</div>
+        <div class="click-text">မင်းအတွက် Surprise လေးမို့ နှိပ်ကြည့်ပါဦး...</div>
     </div>
 
     <!-- ၂။ ပင်မအချစ်ကမ္ဘာမျက်နှာပြင် -->
@@ -185,18 +175,14 @@
         <canvas id="starfield"></canvas>
         
         <div class="center-container">
-            <!-- ⚡ 💡 Cyber Neon Heart အလယ်ဗဟိုဖွဲ့စည်းမှု -->
             <div class="neon-heart-wrapper">
                 <svg class="neon-heart-svg" viewBox="0 0 32 32">
-                    <!-- တိကျလှပသော Vector နီယွန်အသည်းပုံလမ်းကြောင်း -->
                     <path d="M16,28.261L4.636,16.897C1.411,13.672,1.411,8.435,4.636,5.21c3.225-3.225,8.462-3.225,11.364,0 c2.902-3.225,8.139-3.225,11.364,0c3.225,3.225,3.225,8.462,0,11.687L16,28.261z" 
                           stroke-width="1.2" stroke-linejoin="round"/>
-                    <!-- အောက်ခြေ အားသွင်းအဆင့်လိုင်းတိုလေးများ -->
-                    <line x1="11" y1="20" x2="21" y2="20" stroke="white" stroke-width="0.8" opacity="0.8"/>
-                    <line x1="12.5" y1="22" x2="19.5" y2="22" stroke="white" stroke-width="0.8" opacity="0.6"/>
-                    <line x1="14" y1="24" x2="18" y2="24" stroke="white" stroke-width="0.8" opacity="0.4"/>
+                    <line x1="11" y1="19" x2="21" y2="19" stroke="white" stroke-width="0.8" opacity="0.8"/>
+                    <line x1="12.5" y1="21" x2="19.5" y2="21" stroke="white" stroke-width="0.8" opacity="0.6"/>
+                    <line x1="14" y1="23" x2="18" y2="24" stroke="white" stroke-width="0.8" opacity="0.4"/>
                 </svg>
-                <!-- ⚡ နီယွန် လျှပ်စီး -->
                 <div class="neon-lightning">⚡</div>
             </div>
 
@@ -212,7 +198,6 @@
     </audio>
 
     <script>
-        // Cyberpunk ဆန်သော တောက်ပသည့် နီယွန်ရောင်စုံ ခြောက်မျိုး
         const neonColors = ['#ff0055', '#00f0ff', '#bd00ff', '#00ff66', '#ff00aa', '#ffaa00'];
         const romanticShapes = ['❤️', '💖', '💝', '💘', '💕', '💗', '💓', '💞', '🌸', '✨'];
         
@@ -225,10 +210,12 @@
             setTimeout(() => {
                 document.getElementById('introScreen').style.display = 'none';
                 const main = document.getElementById('mainContent');
-                main.style.display = 'flex';
-                setTimeout(() => main.style.opacity = 1, 50);
+                if (main) main.style.display = 'flex';
+                setTimeout(() => { if (main) main.style.opacity = 1; }, 50);
                 
-                document.getElementById('bgMusic').play().catch(() => {});
+                const music = document.getElementById('bgMusic');
+                if (music) music.play().catch(() => {});
+                
                 animationActive = true;
                 initStarfield();
                 setInterval(createRomanticElement, 250);
@@ -236,13 +223,14 @@
             }, 1000);
         }
 
-        // အလယ်က အသည်းပုံကြီးရဲ့ နီယွန်အရောင်ကို စက္ကန့်အလိုက် ငြိမ့်ညောင်းစွာ စီးဆင်းပြောင်းလဲစေခြင်း
         function startNeonCycle() {
             const heartSvg = document.querySelector('.neon-heart-svg');
             let idx = 0;
             setInterval(() => {
-                idx = (idx + 1) % neonColors.length;
-                heartSvg.style.setProperty('--neon-color', neonColors[idx]);
+                if (heartSvg) {
+                    idx = (idx + 1) % neonColors.length;
+                    heartSvg.style.setProperty('--neon-color', neonColors[idx]);
+                }
             }, 1500);
         }
 
@@ -271,5 +259,24 @@
 
         function initStarfield() {
             const canvas = document.getElementById('starfield');
+            if(!canvas) return;
             const ctx = canvas.getContext('2d');
             canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            const stars = [];
+            for(let i=0; i<60; i++) {
+                stars.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    r: Math.random() * 1.5 + 0.5,
+                    speed: Math.random() * 0.3 + 0.1
+                });
+            }
+
+            function drawStars() {
+                if (!ctx || !canvas) return;
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.fillStyle = "rgba(255, 255, 255, 0.5)";
+                stars.forEach(s => {
+                    ctx.beginPath();

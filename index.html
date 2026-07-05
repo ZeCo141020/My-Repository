@@ -54,37 +54,27 @@
             align-items: center;
         }
 
-        /* 💖 အလင်းတန်းများကို လုံးဝဖျောက်ထားသော အသည်းပုံဒီဇိုင်း */
+        /* 💖 ပုံထဲကအတိုင်း မျဉ်းစောင်းပြတ် လှိုင်းအတွန့်ဒီဇိုင်းအသစ် */
         .neon-heart-svg {
             position: absolute;
             width: 100%;
             height: 100%;
-            fill: rgba(0, 0, 0, 0.7); 
-            stroke: #ff1a4a; /* တည်ငြိမ်ပြီး လှပသောအနီရောင်လိုင်း */
-            stroke-width: 1.8;
+            fill: rgba(0, 0, 0, 0.75); 
+            stroke: #ff1a4a; 
+            stroke-width: 2; /* မျဉ်းကြောင်းကို ပိုထင်ရှားစေရန် အနည်းငယ် ထူထားပါသည် */
             stroke-linecap: round;
             stroke-linejoin: round;
-            /* ❌ Drop-shadow နှင့် Glow လိုင်းဟောင်းများကို ဤနေရာတွင် လုံးဝဖျောက်ဖျက်လိုက်ပါပြီ */
+            
+            /* 👇 ဤကုဒ်လိုင်းဖြင့် ပုံထဲကအတိုင်း မျဉ်းပြတ် မျဉ်းစောင်းစတိုင်လ်ကို ဖန်တီးထားခြင်းဖြစ်ပါသည် */
+            stroke-dasharray: 6, 6; 
+            
             animation: pulseGlow 1.2s infinite alternate ease-in-out, edmWave 0.8s infinite linear;
             z-index: 2;
             transform-origin: center;
             will-change: transform;
         }
 
-        .heart-wings {
-            position: absolute;
-            font-size: 16rem;
-            color: #00f0ff;
-            opacity: 0.4;
-            animation: wingFlap 0.6s infinite alternate ease-in-out;
-            z-index: 1;
-            user-select: none;
-        }
-
-        @keyframes wingFlap {
-            0% { transform: scaleX(0.85) scaleY(0.95); opacity: 0.25; }
-            100% { transform: scaleX(1.15) scaleY(1.05); opacity: 0.5; }
-        }
+        /* ❌ လိပ်ပြာကြီး (`🦋`) ကုဒ်ဟောင်းကို ဤနေရာတွင် လုံးဝဖျောက်ဖျက်ပစ်လိုက်ပါပြီ */
 
         @keyframes pulseGlow {
             0% { transform: scale(1); }
@@ -92,11 +82,11 @@
         }
 
         @keyframes edmWave {
-            0% { transform: scale(1) skewX(0deg) skewY(0deg); }
+            0% { transform: scale(1) skewX(0deg) skewY(0deg); stroke-dashoffset: 0; }
             25% { transform: scale(1.04) skewX(2deg) skewY(1deg); }
             50% { transform: scale(0.97) skewX(-2deg) skewY(-1deg); }
             75% { transform: scale(1.03) skewX(1deg) skewY(-2deg); }
-            100% { transform: scale(1) skewX(0deg) skewY(0deg); }
+            100% { transform: scale(1) skewX(0deg) skewY(0deg); stroke-dashoffset: -24; } /* မျဉ်းစောင်းလေးများ တရွေ့ရွေ့ စီးဆင်းနေစေရန် */
         }
         
         .love-text {
@@ -144,13 +134,13 @@
     <div class="main-content" id="mainContent">
         <div class="center-container">
             <div class="neon-heart-wrapper">
-                <div class="heart-wings">🦋</div>
+                <!-- ❌ လိပ်ပြာစာသားကို ဤနေရာတွင် ဖယ်ရှားလိုက်ပါပြီ -->
                 <svg class="neon-heart-svg" viewBox="0 0 32 32">
                     <path d="M16,28.261L4.636,16.897C1.411,13.672,1.411,8.435,4.636,5.21c3.225-3.225,8.462-3.225,11.364,0 c2.902-3.225,8.139-3.225,11.364,0c3.225,3.225,3.225,8.462,0,11.687L16,28.261z" stroke-width="1.2" stroke-linejoin="round"/>
                 </svg>
                 <div class="love-text">
-                    <div>အရမ်းချစ်တယ် ❤️</div>
-                    <div class="sub-text">ယူမီတစ်ယောက်တည်းကိုပဲ...</div>
+                    <div>ချစ်တယ် ❤️</div>
+                    <div class="sub-text">မင်းလေးတစ်ယောက်တည်းကိုပဲ...</div>
                 </div>
             </div>
         </div>
@@ -165,18 +155,7 @@
         window.onload = function() {
             initAdvancedEffects();
             setInterval(createExplosiveElement, 55); 
-            startNeonCycle();
         };
-
-        function startNeonCycle() {
-            var wings = document.querySelector('.heart-wings');
-            var idx = 0;
-            setInterval(function() {
-                idx = (idx + 1) % neonColors.length;
-                var wingColor = neonColors[(idx + 3) % neonColors.length];
-                if (wings) wings.style.setProperty('--neon-color', wingColor);
-            }, 1200);
-        }
 
         function createExplosiveElement() {
             var item = document.createElement('div');

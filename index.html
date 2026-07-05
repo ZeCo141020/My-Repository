@@ -34,6 +34,8 @@
             cursor: pointer;
             animation: bounce 1.5s infinite alternate;
             filter: drop-shadow(0 0 20px #ff4d6d);
+            user-select: none;
+            -webkit-user-select: none;
         }
 
         .click-text {
@@ -42,6 +44,7 @@
             font-size: 1.5rem;
             letter-spacing: 2px;
             animation: pulseText 1s infinite alternate;
+            pointer-events: none;
         }
 
         @keyframes bounce {
@@ -166,7 +169,8 @@
 
     <!-- ၁။ အစဦး Surprise ဘူးစခရင် -->
     <div class="intro-screen" id="introScreen">
-        <div class="gift-box" onclick="startSurprise()">🎁</div>
+        <!-- 🎁 နှိပ်ရမည့် နေရာကို ပိုပြီးသေချာအောင် ပြင်ဆင်ထားခြင်း -->
+        <div class="gift-box" id="clickableGift" style="padding: 20px;">🎁</div>
         <div class="click-text">မင်းအတွက် Surprise လေးမို့ နှိပ်ကြည့်ပါဦး...</div>
     </div>
 
@@ -193,10 +197,6 @@
         </div>
     </div>
 
-    <audio id="bgMusic" loop>
-        <source src="https://mixkit.co" type="audio/wav">
-    </audio>
-
     <script>
         const neonColors = ['#ff0055', '#00f0ff', '#bd00ff', '#00ff66', '#ff00aa', '#ffaa00'];
         const romanticShapes = ['❤️', '💖', '💝', '💘', '💕', '💗', '💓', '💞', '🌸', '✨'];
@@ -205,16 +205,25 @@
         let shapeIndex = 0;
         let animationActive = false;
 
+        // 🎁 နှိပ်လိုက်တာနဲ့ ချက်ချင်း ပွင့်ထွက်သွားစေမည့် Event Listener စနစ်အသစ်
+        const giftBtn = document.getElementById('clickableGift');
+        if(giftBtn) {
+            giftBtn.addEventListener('click', startSurprise);
+            giftBtn.addEventListener('touchstart', startSurprise); // ဖုန်းအတွက်ပါ အလုပ်လုပ်စေရန်
+        }
+
         function startSurprise() {
-            document.getElementById('introScreen').style.opacity = 0;
+            const intro = document.getElementById('introScreen');
+            const main = document.getElementById('mainContent');
+            
+            if(intro) intro.style.opacity = 0;
+            
             setTimeout(() => {
-                document.getElementById('introScreen').style.display = 'none';
-                const main = document.getElementById('mainContent');
-                if (main) main.style.display = 'flex';
-                setTimeout(() => { if (main) main.style.opacity = 1; }, 50);
-                
-                const music = document.getElementById('bgMusic');
-                if (music) music.play().catch(() => {});
+                if(intro) intro.style.display = 'none';
+                if(main) {
+                    main.style.display = 'flex';
+                    setTimeout(() => { main.style.opacity = 1; }, 50);
+                }
                 
                 animationActive = true;
                 initStarfield();
@@ -270,13 +279,3 @@
                     x: Math.random() * canvas.width,
                     y: Math.random() * canvas.height,
                     r: Math.random() * 1.5 + 0.5,
-                    speed: Math.random() * 0.3 + 0.1
-                });
-            }
-
-            function drawStars() {
-                if (!ctx || !canvas) return;
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                ctx.fillStyle = "rgba(255, 255, 255, 0.5)";
-                stars.forEach(s => {
-                    ctx.beginPath();

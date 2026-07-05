@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For You ❤️</title>
+    <style>
+        /* စခရင်နောက်ခံကို အမည်းရောင်ထားပြီး စာသားကို အလယ်မှာ ထားခြင်း */
+        body { 
+            background-color: #000; 
+            overflow: hidden; 
+            margin: 0; 
+            font-family: 'Pyidaungsu', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        
+        /* စခရင်အလယ်က အချစ်စာသားဒီဇိုင်း */
+        .love-text {
+            text-align: center;
+            color: #ff4d6d;
+            font-size: 2.5rem;
+            font-weight: bold;
+            text-shadow: 0 0 20px rgba(255, 77, 109, 0.8);
+            z-index: 10; /* စာသားကို အသည်းပုံတွေရဲ့ အပေါ်မှာ ရှိနေစေရန် */
+            animation: pulse 2s infinite;
+        }
+
+        .sub-text {
+            font-size: 1.5rem;
+            color: #fff;
+            margin-top: 10px;
+        }
+
+        /* စာသားကို တုန်ခါပြီး လင်းထိန်စေသော Animation */
+        @keyframes pulse {
+            0% { transform: scale(1); text-shadow: 0 0 20px rgba(255, 77, 109, 0.8); }
+            50% { transform: scale(1.05); text-shadow: 0 0 30px rgba(255, 77, 109, 1); }
+            100% { transform: scale(1); text-shadow: 0 0 20px rgba(255, 77, 109, 0.8); }
+        }
+
+        /* ကြွေဆင်းမည့် အသည်းပုံများ၏ ဒီဇိုင်း */
+        .heart { 
+            position: absolute; 
+            color: #ff1a40; 
+            font-size: 24px; 
+            animation: fall 3s linear infinite; 
+            user-select: none;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- စခရင်အလယ်မှာ ပေါ်မယ့် စာသားများ -->
+    <div class="love-text">
+        <div>ချစ်တယ် ❤️</div>
+        <div class="sub-text">မင်းလေးတစ်ယောက်တည်းကိုပဲ...</div>
+    </div>
+
+    <script>
+        // အသည်းပုံလေးများ အလိုအလျောက် ဖန်တီးပေးသည့် စနစ်
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerText = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.fontSize = Math.random() * 20 + 15 + 'px'; // အသည်းပုံ အရွယ်အစား ကြီးသေး ကျပန်းလုပ်ခြင်း
+            heart.style.animationDuration = Math.random() * 2 + 2 + 's'; // ကျဆင်းနှုန်း အနှေးအမြန် ကျပန်းလုပ်ခြင်း
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 4000);
+        }
+        setInterval(createHeart, 150); // မီလီစက္ကန့် ၁၅၀ တိုင်း အသည်းပုံအသစ် ထွက်လာမည်
+    </script>
+</body>
+</html>

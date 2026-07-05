@@ -54,15 +54,20 @@
             align-items: center;
         }
 
+        /* 💖 ပုံထဲကအတိုင်း အတွင်းပိုင်းလုံးဝအကြည်ရောင်နှင့် အပြင်ဘောင် နီယွန်မီးချောင်း အသည်းပုံကြီးစတိုင်လ် */
         .neon-heart-main-svg {
             position: absolute;
             width: 100%;
             height: 100%;
-            fill: #ff66a3; 
+            
+            /* 👇 ဤနေရာတွင် အလယ်အသည်းပုံကြီးအတွင်းပိုင်းကို ပုံစံအမှန်အတိုင်း လုံးဝ အကြည်ရောင် ပြောင်းလဲလိုက်ခြင်းဖြစ်ပါသည် */
+            fill: none; 
+            
             stroke: #ff1a75; 
             stroke-width: 2.2; 
             stroke-linecap: round;
             stroke-linejoin: round;
+            /* စူးရှတောက်ပသော ပန်းရောင်နီယွန်မီးရောင် အလင်းတန်း */
             filter: drop-shadow(0 0 15px #ff1a75) drop-shadow(0 0 40px #ff1a75);
             animation: heartbeatPulse 1.2s infinite alternate ease-in-out;
             z-index: 5; 
@@ -128,12 +133,14 @@
 </head>
 <body>
 
+    <!-- တကယ့်မီးပန်းများနှင့် အသည်းပတ်လည် ကြယ်မှုန်များဆွဲမည့် Canvas -->
     <canvas id="starfield"></canvas>
 
     <div class="main-content" id="mainContent">
         <div class="center-container">
             <div class="neon-heart-wrapper" id="heartTunnelContainer">
                 
+                <!-- 💖 အလယ်က အတွင်းပိုင်းလုံးဝအကြည်ရောင် နီယွန်အသည်းပုံကြီး Outline အစစ် -->
                 <svg class="neon-heart-main-svg" viewBox="0 0 32 32">
                     <path d="M16,28.261L4.636,16.897C1.411,13.672,1.411,8.435,4.636,5.21c3.225-3.225,8.462-3.225,11.364,0 c2.902-3.225,8.139-3.225,11.364,0c3.225,3.225,3.225,8.462,0,11.687L16,28.261z" stroke-width="1.2" stroke-linejoin="round"/>
                 </svg>
@@ -153,30 +160,27 @@
         var colorIndex = 0;
         var shapeIndex = 0;
         
-        // ⏱️ ၁ မိနစ်ပြည့်လျှင် ရပ်တန့်ရန် ကိန်းရှင်များ သတ်မှတ်ခြင်း
         var burstInterval;
         var tunnelInterval;
 
         window.onload = function() {
             initFestivalFireworks(); 
             
-            // အသည်းပုံများနှင့် ဥမင်လိုင်းများကို စတင်လည်ပတ်ခြင်း
             burstInterval = setInterval(createExplosiveElement, 55); 
             startNeonHeartTunnelEffect(); 
             
-            // 👇 ဤနေရာတွင် ၁ မိနစ် (၆၀၀၀၀ မီလီစက္ကန့်) ပြည့်ပါက အသည်းပုံများအားလုံးကို အလိုအလျောက် ရပ်တန့်ခိုင်းလိုက်ခြင်း ဖြစ်ပါသည်
+            // ၁ မိနစ် (၆၀၀၀၀ မီလီစက္ကန့်) ပြည့်ပါက အသည်းပုံလှိုင်းများအားလုံးကို အလိုအလျောက် ရပ်တန့်ခိုင်းခြင်း
             setTimeout(function() {
-                clearInterval(burstInterval); // အရပ် ၁၆ မျက်နှာ ဖြာထွက်ခြင်းကို ရပ်တန့်ရန်
-                clearInterval(tunnelInterval); // အနောက်က အထပ်ထပ် ဥမင်လိုင်းထွက်ခြင်းကို ရပ်တန့်ရန်
+                clearInterval(burstInterval); 
+                clearInterval(tunnelInterval); 
                 
-                // စခရင်ပေါ်တွင် ကျန်နေသေးသော အသည်းပုံလေးများကိုပါ လှပစွာ ဖျောက်ကွယ်ပစ်ခြင်း
                 var remainingElements = document.querySelectorAll('.burst-element, .tunnel-heart-line');
                 remainingElements.forEach(function(el) {
                     el.style.transition = 'opacity 1s ease';
                     el.style.opacity = 0;
                     setTimeout(function() { el.remove(); }, 1000);
                 });
-            }, 6000); // ၆၀၀၀၀ မီလီစက္ကန့် = ၁ မိနစ် တိတိ
+            }, 60000); 
         };
 
         function startNeonHeartTunnelEffect() {
@@ -291,7 +295,6 @@
 
             var fireworkInterval = setInterval(spawnFestivalFirework, 480); 
 
-            // ၁ မိနစ်ပြည့်လျှင် မီးပန်းများကိုပါ ရပ်တန့်ခိုင်းခြင်း
             setTimeout(function() {
                 clearInterval(fireworkInterval);
             }, 60000);

@@ -16,43 +16,65 @@
             height: 100vh;
         }
         
-        .love-text {
-            text-align: center;
-            color: #ff4d6d;
-            font-size: 3.5rem;
-            font-weight: bold;
-            text-shadow: 0 0 20px rgba(255, 77, 109, 0.8);
+        /* အလယ်က Container */
+        .center-container {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             z-index: 10;
-            animation: pulse 2s infinite;
+        }
+
+        /* 🌟 အလယ်တည့်တည့်က အသည်းပုံအကြီးကြီး Slide Show ဒီဇိုင်း */
+        .big-heart-slide {
+            position: absolute;
+            font-size: 15rem; /* အရမ်းကြီးပြီး ထင်ရှားစေရန် */
+            color: #ff2a55;
+            filter: drop-shadow(0 0 30px rgba(255, 42, 85, 0.8));
+            animation: heartbeat 1.2s infinite ease-in-out;
+            transition: all 0.5s ease-in-out; /* ပုံစံပြောင်းချိန်တွင် နူးညံ့စေရန် */
+            user-select: none;
+        }
+
+        /* အသည်းပုံကြီး ရင်ခုန်သံကဲ့သို့ တုန်ခါစေမည့် Animation */
+        @keyframes heartbeat {
+            0% { transform: scale(1); filter: drop-shadow(0 0 30px rgba(255, 42, 85, 0.8)); }
+            30% { transform: scale(1.1); filter: drop-shadow(0 0 45px rgba(255, 42, 85, 1)); }
+            60% { transform: scale(0.95); filter: drop-shadow(0 0 25px rgba(255, 42, 85, 0.6)); }
+            100% { transform: scale(1); filter: drop-shadow(0 0 30px rgba(255, 42, 85, 0.8)); }
+        }
+        
+        /* အသည်းပုံကြီးပေါ်တွင် ထပ်နေမည့် အချစ်စာသားဒီဇိုင်း */
+        .love-text {
+            position: relative;
+            text-align: center;
+            color: #fff;
+            font-size: 3rem;
+            font-weight: bold;
+            text-shadow: 0 0 15px rgba(0, 0, 0, 1), 0 0 10px rgba(0, 0, 0, 1);
+            z-index: 11; /* အသည်းပုံကြီးရဲ့ အပေါ်မှာ ရှိနေစေရန် */
+            pointer-events: none;
         }
 
         .sub-text {
-            font-size: 2rem;
-            color: #fff;
+            font-size: 1.8rem;
+            color: #ffd670;
             margin-top: 15px;
+            text-shadow: 0 0 10px rgba(0, 0, 0, 1);
         }
 
-        @keyframes pulse {
-            0% { transform: scale(1); text-shadow: 0 0 20px rgba(255, 77, 109, 0.8); }
-            50% { transform: scale(1.05); text-shadow: 0 0 30px rgba(255, 77, 109, 1); }
-            100% { transform: scale(1); text-shadow: 0 0 20px rgba(255, 77, 109, 0.8); }
-        }
-
-        /* အသည်းပုံများ ကြွေဆင်းခြင်းနှင့် တွဲဖက်ထားသော Animation များ */
+        /* ဘေးပတ်လည် ကြွေဆင်းမည့် အသည်းပုံများ၏ ဒီဇိုင်း */
         .heart { 
             position: absolute; 
             user-select: none;
-            /* အောက်ကျခြင်း Animation (fall) နှင့် ပျောက်လိုက်ပေါ်လိုက်ဖြစ်ခြင်း Animation (twinkle) ကို တွဲသုံးထားခြင်း */
             animation: fall 6s linear forwards, twinkle 1.5s ease-in-out infinite alternate;
         }
 
-        /* အောက်သို့ ကြွေဆင်းသည့် Animation */
         @keyframes fall {
             0% { transform: translateY(-120px) rotate(0deg); }
             100% { transform: translateY(100vh) rotate(360deg); }
         }
 
-        /* ပျောက်လိုက် ပေါ်လိုက် (မှိတ်တုတ်မှိတ်တုတ်) ဖြစ်စေသည့် Animation */
         @keyframes twinkle {
             0% { opacity: 0.2; filter: drop-shadow(0 0 2px currentColor); }
             100% { opacity: 1; filter: drop-shadow(0 0 15px currentColor); }
@@ -61,19 +83,40 @@
 </head>
 <body>
 
-    <div class="love-text">
-        <div>ချစ်တယ် ❤️</div>
-        <div class="sub-text">မင်းလေးတစ်ယောက်တည်းကိုပဲ...</div>
+    <!-- အလယ်တည့်တည့်က အသည်းပုံကြီး Slide Show နှင့် စာသား -->
+    <div class="center-container">
+        <div class="big-heart-slide" id="bigHeart">❤️</div>
+        
+        <div class="love-text">
+            <div>ချစ်တယ် ❤️</div>
+            <div class="sub-text">မင်းလေးတစ်ယောက်တည်းကိုပဲ...</div>
+        </div>
     </div>
 
     <script>
         // လှပသော အရောင်အသွေး (၈) မျိုး
         const colors = ['#ff1a40', '#ff70a6', '#ff9770', '#ffd670', '#e9ff70', '#c295d8', '#70e000', '#00b4d8'];
         
-        // 👇 အသည်းပုံ သီးသန့်ကိုမှ ပုံစံကွဲမျိုးစုံ (Unicode Hearts) ထည့်သွင်းထားခြင်း
+        // ဘေးပတ်ပတ်လည်က အသည်းပုံလေးများအတွက် ပုံစံကွဲများ
         const heartShapes = ['❤️', '💖', '💝', '💘', '💕', '💗', '💓', '💞'];
 
-        // အလှည့်ကျစနစ်အတွက် အရေအတွက် မှတ်သားမည့် ကိန်းရှင်များ
+        // 🌟 အလယ်က အသည်းပုံအကြီးကြီးအတွက် ပုံစံမျိုးစုံစာရင်း (Slide Show)
+        const bigHeartShapes = ['❤️', '💖', '💝', '💘', '💗', '💓', '💞', '💍'];
+        let bigHeartIndex = 0;
+
+        // အလယ်က အသည်းပုံကြီးကို ၁.၅ စက္ကန့် (၁၅၀၀ မီလီစက္ကန့်) တိုင်း တစ်မျိုးပြီးတစ်မျိုး အလိုအလျောက် ပြောင်းလဲစေခြင်း
+        setInterval(() => {
+            const bigHeartElement = document.getElementById('bigHeart');
+            bigHeartIndex = (bigHeartIndex + 1) % bigHeartShapes.length;
+            bigHeartElement.innerText = bigHeartShapes[bigHeartIndex];
+            
+            // အရောင်ကိုပါ အလိုအလျောက် လိုက်ပြောင်းပေးခြင်း
+            bigHeartElement.style.color = colors[bigHeartIndex % colors.length];
+            bigHeartElement.style.filter = `drop-shadow(0 0 40px ${colors[bigHeartIndex % colors.length]})`;
+        }, 1500);
+
+
+        // ဘေးပတ်လည်က အသည်းပုံလေးများ အလှည့်ကျ ကြွေဆင်းစေသည့် စနစ်
         let colorIndex = 0;
         let shapeIndex = 0;
 
@@ -81,33 +124,26 @@
             const heart = document.createElement('div');
             heart.classList.add('heart');
             
-            // 👇 တစ်မျိုးပြီးတစ်မျိုး စနစ်တကျ အလှည့်ကျ ထွက်လာစေခြင်း (Sequential Mode)
             heart.innerText = heartShapes[shapeIndex];
             const randomColor = colors[colorIndex];
             heart.style.color = randomColor;
 
-            // နောက်တစ်ကြိမ်အတွက် အညွှန်းကိန်းကို တစ်တိုးခြင်း (အဆုံးရောက်ရင် အစကပြန်စမည်)
             shapeIndex = (shapeIndex + 1) % heartShapes.length;
             colorIndex = (colorIndex + 1) % colors.length;
             
-            // မျက်နှာပြင် ဘယ်/ညာ တည်နေရာကို ကျပန်းချပေးခြင်း
             heart.style.left = Math.random() * 90 + 5 + 'vw';
             
-            // အရွယ်အစားကို အကြီးကြီး (၇၀ မှ ၁၁၀ ပစ်ဆယ်) အတိုင်း ထားပေးထားပါတယ်
-            heart.style.fontSize = Math.random() * 40 + 70 + 'px'; 
+            // ဘေးကအသည်းပုံလေးတွေကို အလယ်ကအကောင်ထက် မကြီးစေရန် (၄၀ မှ ၇၀ ပစ်ဆယ်) ဝန်းကျင်ပဲ ထားပေးထားပါတယ်
+            heart.style.fontSize = Math.random() * 30 + 40 + 'px'; 
             
-            // ကျဆင်းနှုန်း အနှေးအမြန်ကို အနည်းငယ် ညှိပေးထားခြင်း
             const duration = Math.random() * 2 + 5;
             heart.style.animationName = 'fall, twinkle';
             heart.style.animationDuration = `${duration}s, ${Math.random() * 0.5 + 1}s`;
             
             document.body.appendChild(heart);
-            
-            // စခရင်အောက်ခြေရောက်ရင် ဖျက်ပစ်ခြင်း
             setTimeout(() => heart.remove(), duration * 1000);
         }
 
-        // မီလီစက္ကန့် ၃၀၀ တိုင်းမှာ အသည်းပုံတစ်ပွင့်စီ စနစ်တကျ အလှည့်ကျ ပွင့်ထွက်လာမည်
         setInterval(createSpecialHeart, 300);
     </script>
 </body>

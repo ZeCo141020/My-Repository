@@ -16,52 +16,7 @@
             height: 100vh;
         }
 
-        /* 🎁 Surprise လက်ဆောင်ဘူးစခရင် */
-        .intro-screen {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-color: #000;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 100;
-            transition: opacity 1s ease-in-out;
-        }
-
-        .gift-box {
-            font-size: 6rem;
-            cursor: pointer;
-            animation: bounce 1.5s infinite alternate;
-            filter: drop-shadow(0 0 20px #ff4d6d);
-            user-select: none;
-            -webkit-user-select: none;
-        }
-
-        .click-text {
-            color: #fff;
-            margin-top: 20px;
-            font-size: 1.5rem;
-            letter-spacing: 2px;
-            animation: pulseText 1s infinite alternate;
-            pointer-events: none;
-        }
-
-        @keyframes bounce {
-            0% { transform: scale(1) translateY(0); }
-            100% { transform: scale(1.1) translateY(-20px); }
-        }
-
-        @keyframes pulseText {
-            0% { opacity: 0.4; }
-            100% { opacity: 1; }
-        }
-
-        /* ပင်မမျက်နှာပြင် */
         .main-content {
-            display: none;
-            opacity: 0;
-            transition: opacity 1.5s ease-in-out;
             width: 100%;
             height: 100%;
             position: relative;
@@ -86,7 +41,6 @@
             z-index: 10;
         }
 
-        /* 🔋 ⚡ အလယ်ဗဟို နီယွန်အားသွင်းအသည်းပုံ အိမ်ရာ */
         .neon-heart-wrapper {
             position: relative;
             width: 280px;
@@ -96,7 +50,7 @@
             align-items: center;
         }
 
-        /* စစ်မှန်သော ကာတွန်းနီယွန်မီးချောင်း အကျိုးသက်ရောက်မှု */
+        /* တောက်ပသော နီယွန်မီးချောင်း အကျိုးသက်ရောက်မှု */
         .neon-heart-svg {
             width: 100%;
             height: 100%;
@@ -110,7 +64,6 @@
             animation: pulseGlow 1.5s infinite alternate ease-in-out;
         }
 
-        /* ⚡ နီယွန် လျှပ်စီးအလင်းတန်း Icon */
         .neon-lightning {
             position: absolute;
             bottom: -20px;
@@ -146,7 +99,6 @@
             text-shadow: 0 0 15px rgba(0,0,0,1);
         }
 
-        /* တွဲဖက်ကြွေဆင်းမည့်အရာများ */
         .falling-element { 
             position: absolute; 
             user-select: none;
@@ -167,22 +119,13 @@
 </head>
 <body>
 
-    <!-- ၁။ အစဦး Surprise ဘူးစခရင် -->
-    <div class="intro-screen" id="introScreen">
-        <!-- 🎁 နှိပ်ရမည့် နေရာကို ပိုပြီးသေချာအောင် ပြင်ဆင်ထားခြင်း -->
-        <div class="gift-box" id="clickableGift" style="padding: 20px;">🎁</div>
-        <div class="click-text">ယူမီအတွက် Surprise လေးမို့ နှိပ်ကြည့်ပါဦး...</div>
-    </div>
-
-    <!-- ၂။ ပင်မအချစ်ကမ္ဘာမျက်နှာပြင် -->
     <div class="main-content" id="mainContent">
         <canvas id="starfield"></canvas>
         
         <div class="center-container">
             <div class="neon-heart-wrapper">
                 <svg class="neon-heart-svg" viewBox="0 0 32 32">
-                    <path d="M16,28.261L4.636,16.897C1.411,13.672,1.411,8.435,4.636,5.21c3.225-3.225,8.462-3.225,11.364,0 c2.902-3.225,8.139-3.225,11.364,0c3.225,3.225,3.225,8.462,0,11.687L16,28.261z" 
-                          stroke-width="1.2" stroke-linejoin="round"/>
+                    <path d="M16,28.261L4.636,16.897C1.411,13.672,1.411,8.435,4.636,5.21c3.225-3.225,8.462-3.225,11.364,0 c2.902-3.225,8.139-3.225,11.364,0c3.225,3.225,3.225,8.462,0,11.687L16,28.261z" stroke-width="1.2" stroke-linejoin="round"/>
                     <line x1="11" y1="19" x2="21" y2="19" stroke="white" stroke-width="0.8" opacity="0.8"/>
                     <line x1="12.5" y1="21" x2="19.5" y2="21" stroke="white" stroke-width="0.8" opacity="0.6"/>
                     <line x1="14" y1="23" x2="18" y2="24" stroke="white" stroke-width="0.8" opacity="0.4"/>
@@ -191,51 +134,29 @@
             </div>
 
             <div class="love-text">
-                <div>အရမ်းချစ်တယ် ❤️</div>
-                <div class="sub-text">ယူမီတစ်ယောက်တည်းကိုပဲ...</div>
+                <div>ချစ်တယ် ❤️</div>
+                <div class="sub-text">မင်းလေးတစ်ယောက်တည်းကိုပဲ...</div>
             </div>
         </div>
     </div>
 
     <script>
-        const neonColors = ['#ff0055', '#00f0ff', '#bd00ff', '#00ff66', '#ff00aa', '#ffaa00'];
-        const romanticShapes = ['❤️', '💖', '💝', '💘', '💕', '💗', '💓', '💞', '🌸', '✨'];
+        var neonColors = ['#ff0055', '#00f0ff', '#bd00ff', '#00ff66', '#ff00aa', '#ffaa00'];
+        var romanticShapes = ['❤️', '💖', '💝', '💘', '💕', '💗', '💓', '💞', '🌸', '✨'];
         
-        let colorIndex = 0;
-        let shapeIndex = 0;
-        let animationActive = false;
+        var colorIndex = 0;
+        var shapeIndex = 0;
 
-        // 🎁 နှိပ်လိုက်တာနဲ့ ချက်ချင်း ပွင့်ထွက်သွားစေမည့် Event Listener စနစ်အသစ်
-        const giftBtn = document.getElementById('clickableGift');
-        if(giftBtn) {
-            giftBtn.addEventListener('click', startSurprise);
-            giftBtn.addEventListener('touchstart', startSurprise); // ဖုန်းအတွက်ပါ အလုပ်လုပ်စေရန်
-        }
-
-        function startSurprise() {
-            const intro = document.getElementById('introScreen');
-            const main = document.getElementById('mainContent');
-            
-            if(intro) intro.style.opacity = 0;
-            
-            setTimeout(() => {
-                if(intro) intro.style.display = 'none';
-                if(main) {
-                    main.style.display = 'flex';
-                    setTimeout(() => { main.style.opacity = 1; }, 50);
-                }
-                
-                animationActive = true;
-                initStarfield();
-                setInterval(createRomanticElement, 250);
-                startNeonCycle();
-            }, 1000);
-        }
+        window.onload = function() {
+            initStarfield();
+            setInterval(createRomanticElement, 250);
+            startNeonCycle();
+        };
 
         function startNeonCycle() {
-            const heartSvg = document.querySelector('.neon-heart-svg');
-            let idx = 0;
-            setInterval(() => {
+            var heartSvg = document.querySelector('.neon-heart-svg');
+            var idx = 0;
+            setInterval(function() {
                 if (heartSvg) {
                     idx = (idx + 1) % neonColors.length;
                     heartSvg.style.setProperty('--neon-color', neonColors[idx]);
@@ -244,38 +165,59 @@
         }
 
         function createRomanticElement() {
-            if(!animationActive) return;
-            const item = document.createElement('div');
+            var item = document.createElement('div');
             item.classList.add('falling-element');
             
             item.innerText = romanticShapes[shapeIndex];
-            const randomColor = neonColors[colorIndex % neonColors.length];
+            var randomColor = neonColors[colorIndex % neonColors.length];
             item.style.color = randomColor;
 
             shapeIndex = (shapeIndex + 1) % romanticShapes.length;
             colorIndex = (colorIndex + 1) % neonColors.length;
             
-            item.style.left = Math.random() * 92 + 4 + 'vw';
-            item.style.fontSize = Math.random() * 25 + 50 + 'px'; 
+            item.style.left = (Math.random() * 92 + 4) + 'vw';
+            item.style.fontSize = (Math.random() * 25 + 50) + 'px'; 
             
-            const duration = Math.random() * 2 + 5;
+            var duration = Math.random() * 2 + 5;
             item.style.animationName = 'fall, twinkle';
-            item.style.animationDuration = `${duration}s, ${Math.random() * 0.5 + 0.8}s`;
+            item.style.animationDuration = duration + 's, ' + (Math.random() * 0.5 + 0.8) + 's';
             
             document.body.appendChild(item);
-            setTimeout(() => item.remove(), duration * 1000);
+            setTimeout(function() { item.remove(); }, duration * 1000);
         }
 
         function initStarfield() {
-            const canvas = document.getElementById('starfield');
+            var canvas = document.getElementById('starfield');
             if(!canvas) return;
-            const ctx = canvas.getContext('2d');
+            var ctx = canvas.getContext('2d');
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
 
-            const stars = [];
-            for(let i=0; i<60; i++) {
+            var stars = [];
+            for(var i=0; i<60; i++) {
                 stars.push({
                     x: Math.random() * canvas.width,
                     y: Math.random() * canvas.height,
                     r: Math.random() * 1.5 + 0.5,
+                    speed: Math.random() * 0.3 + 0.1
+                });
+            }
+
+            function drawStars() {
+                if (!ctx || !canvas) return;
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.fillStyle = "rgba(255, 255, 255, 0.5)";
+                stars.forEach(function(s) {
+                    ctx.beginPath();
+                    ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2, true);
+                    ctx.fill();
+                    s.y += s.speed;
+                    if(s.y > canvas.height) s.y = 0;
+                });
+                requestAnimationFrame(drawStars);
+            }
+            drawStars();
+        }
+    </script>
+</body>
+</html>

@@ -6,7 +6,7 @@
     <title>For You ❤️</title>
     <style>
         body { 
-            background: radial-gradient(circle, #1a0007 0%, #000000 100%); 
+            background: radial-gradient(circle, #22000a 0%, #050002 50%, #000000 100%); 
             overflow: hidden; 
             margin: 0; 
             font-family: 'Pyidaungsu', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -58,74 +58,84 @@
             position: absolute;
             width: 100%;
             height: 100%;
-            fill: rgba(20, 0, 5, 0.8); 
+            fill: rgba(10, 0, 3, 0.85); 
             stroke: var(--neon-color, #ff0055);
-            stroke-width: 1.5;
+            stroke-width: 1.8;
             stroke-linecap: round;
-            filter: drop-shadow(0 0 12px var(--neon-color, #ff0055))
-                    drop-shadow(0 0 30px var(--neon-color, #ff0055))
-                    drop-shadow(0 0 60px var(--neon-color, #ff0055));
-            animation: pulseGlow 1.2s infinite alternate ease-in-out;
+            filter: drop-shadow(0 0 15px var(--neon-color, #ff0055))
+                    drop-shadow(0 0 35px var(--neon-color, #ff0055))
+                    drop-shadow(0 0 75px var(--neon-color, #ff0055));
+            animation: pulseGlow 1s infinite alternate ease-in-out;
             z-index: 2;
         }
 
         .heart-wings {
             position: absolute;
-            font-size: 16rem;
+            font-size: 17rem;
             color: var(--neon-color, #00f0ff);
-            opacity: 0.6;
+            opacity: 0.65;
             filter: drop-shadow(0 0 25px var(--neon-color, #00f0ff));
-            animation: wingFlap 0.6s infinite alternate ease-in-out;
+            animation: wingFlap 0.5s infinite alternate ease-in-out;
             z-index: 1;
             user-select: none;
         }
 
         @keyframes wingFlap {
-            0% { transform: scaleX(0.85) scaleY(1); opacity: 0.4; }
-            100% { transform: scaleX(1.15) scaleY(1.05); opacity: 0.7; }
+            0% { transform: scaleX(0.8) scaleY(0.95); opacity: 0.4; }
+            100% { transform: scaleX(1.2) scaleY(1.05); opacity: 0.75; }
         }
 
         @keyframes pulseGlow {
             0% { transform: scale(1); }
-            100% { transform: scale(1.08); }
+            100% { transform: scale(1.1); }
         }
         
         .love-text {
             position: absolute;
             text-align: center;
             color: #fff;
-            font-size: 2.5rem; 
+            font-size: 2.6rem; 
             font-weight: bold;
             text-shadow: 0 0 15px rgba(0,0,0,1);
             pointer-events: none;
             z-index: 11; 
-            width: 80%;
+            width: 85%;
             margin-top: -30px; 
-            animation: textPulse 1.2s infinite alternate ease-in-out;
+            animation: textPulse 1s infinite alternate ease-in-out;
         }
 
         .sub-text {
-            font-size: 1.3rem;
+            font-size: 1.35rem;
             color: #ffd670;
-            margin-top: 8px;
+            margin-top: 10px;
             text-shadow: 0 0 10px rgba(0,0,0,1);
         }
 
+        @keyframes textPulse {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.06); }
+        }
+
+        /* 💎 အထပ်ထပ် 3D ရောင်စုံနီယွန်ကျောက်မျက်များ */
         .burst-element { 
             position: absolute; 
             user-select: none;
             z-index: 20;
             top: 50%; left: 50%;
             pointer-events: none;
+            font-weight: bold;
+            /* သက်တံရောင် နီယွန်အလင်းတန်း (3D Neon Overlay Effects) */
+            filter: drop-shadow(0 0 8px currentColor) drop-shadow(0 0 20px currentColor) contrast(1.5);
+            mix-blend-mode: screen;
         }
     </style>
 </head>
 <body>
 
-    <!-- မီးပန်းများဆွဲမည့် ကင်းဗတ်နောက်ခံ -->
+    <!-- အဆင့်မြင့်မီးပန်းများနှင့် ကြယ်စင်မှုန်များဆွဲမည့်နေရာ -->
     <canvas id="starfield"></canvas>
 
-    <!-- အလယ်က အသည်းပုံကြီးနှင့် စာသားများ -->
+    <!-- ဗဟိုချက် အချစ်နီယွန်ကမ္ဘာ -->
     <div class="main-content" id="mainContent">
         <div class="center-container">
             <div class="neon-heart-wrapper">
@@ -149,7 +159,8 @@
 
         window.onload = function() {
             initAdvancedEffects();
-            setInterval(createExplosiveElement, 40); 
+            // ကောင်မလေး အံ့ဩသွားစေရန် ပေါက်ကွဲနှုန်းကို အစွမ်းကုန်မြှင့်ထားခြင်း (၂၅ မီလီစက္ကန့်တစ်ကြိမ်)
+            setInterval(createExplosiveElement, 25); 
             startNeonCycle();
         };
 
@@ -160,7 +171,7 @@
             setInterval(function() {
                 idx = (idx + 1) % neonColors.length;
                 var nextColor = neonColors[idx];
-                var wingColor = neonColors[(idx + 3) % neonColors.length];
+                var wingColor = neonColors[(idx + 4) % neonColors.length];
                 if (heartSvg) heartSvg.style.setProperty('--neon-color', nextColor);
                 if (wings) wings.style.setProperty('--neon-color', wingColor);
             }, 1000);
@@ -177,28 +188,38 @@
             shapeIndex = (shapeIndex + 1) % romanticShapes.length;
             colorIndex = (colorIndex + 1) % neonColors.length;
             
-            item.style.fontSize = (Math.random() * 25 + 35) + 'px';
+            // စာလုံးအရွယ်အစားကို ပိုမိုကြီးမားပြည့်စုံစေရန် မြှင့်တင်ခြင်း
+            item.style.fontSize = (Math.random() * 30 + 40) + 'px'; 
             
             var angleIndex = Math.floor(Math.random() * 16);
             var angle = (angleIndex / 16) * Math.PI * 2;
             
-            var maxDistance = Math.max(window.innerWidth, window.innerHeight) * 0.8;
-            var moveX = Math.cos(angle) * maxDistance;
-            var moveY = Math.sin(angle) * maxDistance;
-            
-            var duration = Math.random() * 1.5 + 2.5; 
+            var maxDistance = Math.max(window.innerWidth, window.innerHeight) * 0.9;
+            var duration = Math.random() * 1.2 + 2.3; // ပိုမိုမြန်ဆန်သွက်လက်စေရန်
             var uniqueStyleName = 'burstAnim_' + Math.random().toString(36).substr(2, 9);
             
+            // 🌊 အထူးဆန်းပြားသော ၃ ဆင့် လှိုင်းတွန့်ကွေးညွတ်မှု သင်္ချာဖော်မြူလာ (S-Curve Advanced Waves)
+            var freq = Math.random() * 4 + 2; 
+            var amp = Math.random() * 80 + 40; 
+            var moveX1 = Math.cos(angle) * (maxDistance * 0.25) + Math.sin(angle) * amp;
+            var moveY1 = Math.sin(angle) * (maxDistance * 0.25) - Math.cos(angle) * amp;
+            var moveX2 = Math.cos(angle) * (maxDistance * 0.6) - Math.sin(angle) * amp;
+            var moveY2 = Math.sin(angle) * (maxDistance * 0.6) + Math.cos(angle) * amp;
+            var finalX = Math.cos(angle) * maxDistance;
+            var finalY = Math.sin(angle) * maxDistance;
+
             var styleSheet = document.createElement("style");
+            // အရှိန်အဟုန်ပြင်းပြင်းဖြင့် လှိုင်းအတွန့် အထပ်ထပ် ပေါက်ကွဲထွက်သွားမည့် CSS Keyframes
             styleSheet.innerText = `@keyframes ${uniqueStyleName} {
-                0% { transform: translate(-50%, -50%) translate(0, 0) scale(0.3); opacity: 0; filter: drop-shadow(0 0 2px ${randomColor}) brightness(0.6); }
-                15% { opacity: 1; filter: drop-shadow(0 0 15px ${randomColor}) brightness(1.6); }
-                85% { opacity: 1; }
-                100% { transform: translate(-50%, -50%) translate(${moveX}px, ${moveY}px) scale(1.1); opacity: 0; }
+                0% { transform: translate(-50%, -50%) translate(0, 0) scale(0.3) rotate(0deg); opacity: 0; }
+                10% { opacity: 1; }
+                35% { transform: translate(-50%, -50%) translate(${moveX1}px, ${moveY1}px) scale(0.9) rotate(240deg); }
+                65% { transform: translate(-50%, -50%) translate(${moveX2}px, ${moveY2}px) scale(1.4) rotate(480deg); opacity: 1; }
+                100% { transform: translate(-50%, -50%) translate(${finalX}px, ${finalY}px) scale(0.6) rotate(720deg); opacity: 0; }
             }`;
             document.head.appendChild(styleSheet);
             
-            item.style.animation = `${uniqueStyleName} ${duration}s cubic-bezier(0.15, 0.85, 0.35, 1) forwards`;
+            item.style.animation = `${uniqueStyleName} ${duration}s cubic-bezier(0.1, 0.8, 0.25, 1) forwards`;
             
             document.body.appendChild(item);
             
@@ -226,14 +247,17 @@
                 });
             }
 
+            // 🎆 စခရင်အနှံ့ နေရာစုံတွင် အသည်းပုံမီးပန်းများ အမြောက်အမြားဖောက်သည့် စနစ်
             function spawnFirework() {
+                // စခရင်အပေါ်ပိုင်းတင်မကဘဲ တစ်ပြင်လုံးမှာ ပေါက်ကွဲစေရန် နေရာချခြင်း
                 var targetX = Math.random() * canvas.width;
-                var targetY = Math.random() * (canvas.height * 0.5) + 80;
+                var targetY = Math.random() * (canvas.height * 0.7) + 50;
                 var fwColor = neonColors[Math.floor(Math.random() * neonColors.length)];
                 
-                for(var j=0; j<25; j++) {
-                    var angle = (j / 25) * Math.PI * 2;
-                    var speed = Math.random() * 2 + 1.2;
+                // ပေါက်ကွဲမှုန်အရေအတွက်ကို ၅၅ စီအထိ တိုးမြှင့်ပြီး ထူထူထပ်ထပ်ဖြစ်စေခြင်း
+                for(var j=0; j<55; j++) {
+                    var angle = (j / 55) * Math.PI * 2;
+                    var speed = Math.random() * 4.5 + 1.5; 
                     fireworks.push({
                         x: targetX,
                         y: targetY,
@@ -241,12 +265,13 @@
                         vy: Math.sin(angle) * speed,
                         alpha: 1,
                         color: fwColor,
-                        size: Math.random() * 2 + 2
+                        size: Math.random() * 2 + 2.8
                     });
                 }
             }
 
-            setInterval(spawnFirework, 2000);
+            // ⚡ ၃၅၀ မီလီစက္ကန့် (၀.၃၅ စက္ကန့်) တိုင်း မီးပန်းများ တရစပ် ပေါက်ကွဲစေခြင်း
+            setInterval(spawnFirework, 350);
 
             function draw() {
                 if (!ctx || !canvas) return;
@@ -264,17 +289,23 @@
                 fireworks.forEach(function(f, index) {
                     ctx.fillStyle = f.color;
                     ctx.globalAlpha = f.alpha;
-                    ctx.font = (f.size * 4.5) + "px Arial";
+                    
+                    // 4K Neon Glow အထူးမီးရောင် စနစ်ထည့်သွင်းခြင်း
+                    ctx.shadowBlur = 20;
+                    ctx.shadowColor = f.color;
+                    
+                    ctx.font = (f.size * 5) + "px Arial";
                     ctx.fillText("💖", f.x, f.y);
                     
                     f.x += f.vx;
                     f.y += f.vy;
-                    f.alpha -= 0.015;
+                    f.alpha -= 0.01; // ပိုမိုကြာရှည်စွာ လင်းပိုင်နေစေရန် အနှေးချထားခြင်း
                     
                     if(f.alpha <= 0) {
                         fireworks.splice(index, 1);
                     }
                 });
+                ctx.shadowBlur = 0;
                 ctx.globalAlpha = 1;
 
                 requestAnimationFrame(draw);

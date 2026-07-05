@@ -54,28 +54,22 @@
             align-items: center;
         }
 
-        /* 💖 ပုံထဲကအတိုင်း အတွင်းပိုင်း ပန်းရောင်စစ်စစ်နှင့် အပြင်ဘောင် နီယွန်မီးရောင် အသည်းပုံကြီးစတိုင်လ် */
         .neon-heart-main-svg {
             position: absolute;
             width: 100%;
             height: 100%;
-            
-            /* 👇 ဤနေရာတွင် အလယ်အသည်းပုံကြီးအတွင်းပိုင်းကို နူးညံ့လှပသော ပန်းရောင်စစ်စစ် ထည့်သွင်းထားခြင်းဖြစ်ပါသည် */
             fill: #ff66a3; 
-            
             stroke: #ff1a75; 
             stroke-width: 2.2; 
             stroke-linecap: round;
             stroke-linejoin: round;
-            /* စူးရှတောက်ပသော ပန်းရောင်နီယွန်မီးရောင် အလင်းတန်း */
             filter: drop-shadow(0 0 15px #ff1a75) drop-shadow(0 0 40px #ff1a75);
             animation: heartbeatPulse 1.2s infinite alternate ease-in-out;
-            z-index: 5; /* ဥမင်လိုင်းများ၏ အရှေ့ထိပ်ဆုံးတွင် ထားရှိခြင်း */
+            z-index: 5; 
             transform-origin: center;
             will-change: transform;
         }
 
-        /* 🌟 အနောက်ကနေ အပြင်ဘက်သို့ အထပ်ထပ် တန်းစီပွင့်ထွက်လာမည့် Neon Heart Tunnel လိုင်းများ */
         .tunnel-heart-line {
             position: absolute;
             width: 100%;
@@ -86,7 +80,7 @@
             stroke-linejoin: round;
             transform-origin: center;
             will-change: transform, opacity;
-            z-index: 2; /* အလယ်အသည်းပုံကြီး၏ အနောက်ဘက်တွင် ထားရှိခြင်း */
+            z-index: 2; 
         }
 
         @keyframes heartbeatPulse {
@@ -102,7 +96,7 @@
             font-weight: bold;
             text-shadow: 0 0 15px rgba(0,0,0,1), 0 0 5px rgba(0,0,0,1);
             pointer-events: none;
-            z-index: 25; /* စာသားများကို အပေါ်ဆုံးအလွှာမှာ ထားခြင်း */
+            z-index: 25; 
             width: 85%;
             margin-top: -25px; 
             animation: textPulse 1.2s infinite alternate ease-in-out;
@@ -134,14 +128,12 @@
 </head>
 <body>
 
-    <!-- တကယ့်မီးပန်းများနှင့် အသည်းပတ်လည် ကြယ်မှုန်များဆွဲမည့် Canvas -->
     <canvas id="starfield"></canvas>
 
     <div class="main-content" id="mainContent">
         <div class="center-container">
             <div class="neon-heart-wrapper" id="heartTunnelContainer">
                 
-                <!-- 💖 အလယ်က အတွင်းပန်းရောင်စစ်စစ် နီယွန်အသည်းပုံကြီး Outline အသစ် -->
                 <svg class="neon-heart-main-svg" viewBox="0 0 32 32">
                     <path d="M16,28.261L4.636,16.897C1.411,13.672,1.411,8.435,4.636,5.21c3.225-3.225,8.462-3.225,11.364,0 c2.902-3.225,8.139-3.225,11.364,0c3.225,3.225,3.225,8.462,0,11.687L16,28.261z" stroke-width="1.2" stroke-linejoin="round"/>
                 </svg>
@@ -160,40 +152,53 @@
         
         var colorIndex = 0;
         var shapeIndex = 0;
+        
+        // ⏱️ ၁ မိနစ်ပြည့်လျှင် ရပ်တန့်ရန် ကိန်းရှင်များ သတ်မှတ်ခြင်း
+        var burstInterval;
+        var tunnelInterval;
 
         window.onload = function() {
             initFestivalFireworks(); 
-            setInterval(createExplosiveElement, 55); 
-            startNeonHeartTunnelEffect(); // 🌟 ဥမင်လှိုဏ်ခေါင်းအထပ်ထပ်စနစ်အား မောင်းနှင်ခြင်း
+            
+            // အသည်းပုံများနှင့် ဥမင်လိုင်းများကို စတင်လည်ပတ်ခြင်း
+            burstInterval = setInterval(createExplosiveElement, 55); 
+            startNeonHeartTunnelEffect(); 
+            
+            // 👇 ဤနေရာတွင် ၁ မိနစ် (၆၀၀၀၀ မီလီစက္ကန့်) ပြည့်ပါက အသည်းပုံများအားလုံးကို အလိုအလျောက် ရပ်တန့်ခိုင်းလိုက်ခြင်း ဖြစ်ပါသည်
+            setTimeout(function() {
+                clearInterval(burstInterval); // အရပ် ၁၆ မျက်နှာ ဖြာထွက်ခြင်းကို ရပ်တန့်ရန်
+                clearInterval(tunnelInterval); // အနောက်က အထပ်ထပ် ဥမင်လိုင်းထွက်ခြင်းကို ရပ်တန့်ရန်
+                
+                // စခရင်ပေါ်တွင် ကျန်နေသေးသော အသည်းပုံလေးများကိုပါ လှပစွာ ဖျောက်ကွယ်ပစ်ခြင်း
+                var remainingElements = document.querySelectorAll('.burst-element, .tunnel-heart-line');
+                remainingElements.forEach(function(el) {
+                    el.style.transition = 'opacity 1s ease';
+                    el.style.opacity = 0;
+                    setTimeout(function() { el.remove(); }, 1000);
+                });
+            }, 6000); // ၆၀၀၀၀ မီလီစက္ကန့် = ၁ မိနစ် တိတိ
         };
 
         function startNeonHeartTunnelEffect() {
             var container = document.getElementById('heartTunnelContainer');
             var heartPathD = 'M16,28.261L4.636,16.897C1.411,13.672,1.411,8.435,4.636,5.21c3.225-3.225,8.462-3.225,11.364,0 c2.902-3.225,8.139-3.225,11.364,0c3.225,3.225,3.225,8.462,0,11.687L16,28.261z';
-            
             var cycleIdx = 0;
 
             function spawnTunnelLine() {
                 if (!container) return;
-
                 var svg = document.createElementNS("http://w3.org", "svg");
                 svg.setAttribute("class", "tunnel-heart-line");
                 svg.setAttribute("viewBox", "0 0 32 32");
-
                 var path = document.createElementNS("http://w3.org", "path");
                 path.setAttribute("d", heartPathD);
                 svg.appendChild(path);
-
                 var currentLineColor = tunnelColors[cycleIdx % tunnelColors.length];
                 svg.style.stroke = currentLineColor;
                 svg.style.filter = 'drop-shadow(0 0 8px ' + currentLineColor + ') drop-shadow(0 0 20px ' + currentLineColor + ')';
                 cycleIdx++;
-
                 container.insertBefore(svg, container.firstChild);
-
                 var animId = 'tunnel_' + Math.random().toString(36).substr(2, 9);
                 var styleElement = document.createElement("style");
-                
                 styleElement.innerText = `@keyframes ${animId} {
                     0% { transform: scale(0.1); opacity: 0; }
                     15% { opacity: 1; }
@@ -201,37 +206,26 @@
                     100% { transform: scale(1.9); opacity: 0; }
                 }`;
                 document.head.appendChild(styleElement);
-                
                 svg.style.animation = animId + ' 3.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards';
-
-                setTimeout(function() {
-                    svg.remove();
-                    styleElement.remove();
-                }, 3500);
+                setTimeout(function() { svg.remove(); styleElement.remove(); }, 3500);
             }
-            setInterval(spawnTunnelLine, 350);
+            tunnelInterval = setInterval(spawnTunnelLine, 350);
         }
 
         function createExplosiveElement() {
             var item = document.createElement('div');
             item.classList.add('burst-element');
-            
             item.innerText = romanticShapes[shapeIndex];
             var randomColor = neonColors[colorIndex % neonColors.length];
             item.style.color = randomColor;
-
             shapeIndex = (shapeIndex + 1) % romanticShapes.length;
             colorIndex = (colorIndex + 1) % neonColors.length;
-            
             item.style.fontSize = (Math.random() * 18 + 32) + 'px'; 
-            
             var angleIndex = Math.floor(Math.random() * 16);
             var angle = (angleIndex / 16) * Math.PI * 2;
-            
             var maxDistance = Math.max(window.innerWidth, window.innerHeight) * 0.75;
             var duration = Math.random() * 1.2 + 2.3; 
             var uniqueStyleName = 'burstAnim_' + Math.random().toString(36).substr(2, 9);
-            
             var amp = Math.random() * 50 + 30; 
             var moveX1 = Math.cos(angle) * (maxDistance * 0.3) + Math.sin(angle) * amp;
             var moveY1 = Math.sin(angle) * (maxDistance * 0.3) - Math.cos(angle) * amp;
@@ -239,7 +233,6 @@
             var moveY2 = Math.sin(angle) * (maxDistance * 0.65) + Math.cos(angle) * amp;
             var finalX = Math.cos(angle) * maxDistance;
             var finalY = Math.sin(angle) * maxDistance;
-
             var styleSheet = document.createElement("style");
             styleSheet.innerText = `@keyframes ${uniqueStyleName} {
                 0% { transform: translate(-50%, -50%) translate(0, 0) scale(0.4) rotate(0deg); opacity: 0; }
@@ -249,15 +242,9 @@
                 100% { transform: translate(-50%, -50%) translate(${finalX}px, ${finalY}px) scale(0.7) rotate(720deg); opacity: 0; }
             }`;
             document.head.appendChild(styleSheet);
-            
             item.style.animation = `${uniqueStyleName} ${duration}s cubic-bezier(0.1, 0.8, 0.3, 1) forwards`;
-            
             document.body.appendChild(item);
-            
-            setTimeout(function() { 
-                item.remove(); 
-                styleSheet.remove();
-            }, duration * 1000);
+            setTimeout(function() {  item.remove(); styleSheet.remove(); }, duration * 1000);
         }
         function initFestivalFireworks() {
             var canvas = document.getElementById('starfield');
@@ -272,7 +259,7 @@
 
             for(var i=0; i<45; i++) {
                 glowDustParticles.push({
-                    angle: Math.random() * Math.PI * 2;
+                    angle: Math.random() * Math.PI * 2, 
                     radius: Math.random() * 40 + 130, 
                     speed: Math.random() * 0.02 + 0.01,
                     size: Math.random() * 1.5 + 1.2,
@@ -302,14 +289,17 @@
                 }
             }
 
-            setInterval(spawnFestivalFirework, 480); 
+            var fireworkInterval = setInterval(spawnFestivalFirework, 480); 
+
+            // ၁ မိနစ်ပြည့်လျှင် မီးပန်းများကိုပါ ရပ်တန့်ခိုင်းခြင်း
+            setTimeout(function() {
+                clearInterval(fireworkInterval);
+            }, 60000);
 
             function drawFestivalEffect() {
                 if (!ctx || !canvas) return;
-                
                 ctx.fillStyle = "rgba(0, 0, 0, 0.16)";
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
-
                 var centerX = canvas.width / 2;
                 var centerY = canvas.height / 2;
                 
@@ -317,7 +307,6 @@
                     d.angle += d.speed; 
                     var dustX = centerX + Math.cos(d.angle) * d.radius;
                     var dustY = centerY + Math.sin(d.angle) * d.radius * 0.9; 
-                    
                     ctx.save();
                     ctx.fillStyle = "#ffd670"; 
                     ctx.globalAlpha = Math.abs(Math.sin(d.angle)) * d.brightness; 
@@ -331,22 +320,16 @@
                     ctx.save();
                     ctx.globalAlpha = p.alpha;
                     ctx.fillStyle = p.color;
-                    
                     ctx.beginPath();
                     ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
                     ctx.fill();
                     ctx.restore();
-                    
                     p.x += p.vx;
                     p.y += p.vy;
                     p.vy += p.gravity; 
                     p.alpha -= p.fade; 
-                    
-                    if(p.alpha <= 0) {
-                        fireworkSparks.splice(index, 1);
-                    }
+                    if(p.alpha <= 0) { fireworkSparks.splice(index, 1); }
                 });
-                
                 requestAnimationFrame(drawFestivalEffect);
             }
             drawFestivalEffect();

@@ -6,7 +6,7 @@
     <title>For You ❤️</title>
     <style>
         body { 
-            background: radial-gradient(circle, #1a0006 0%, #000000 100%); 
+            background: radial-gradient(circle, #100005 0%, #000000 100%); 
             overflow: hidden; 
             margin: 0; 
             font-family: 'Pyidaungsu', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -45,7 +45,7 @@
             pointer-events: auto;
         }
 
-        /* 💖 အလယ်က အသည်းပုံစတိုင်လ်အသစ် (Soft Neon Glowing Fluid Heart) */
+        /* 💖 EDM Music Visualizer အသည်းပုံ အိမ်ရာ */
         .neon-heart-wrapper {
             position: relative;
             width: 320px;
@@ -55,18 +55,20 @@
             align-items: center;
         }
 
+        /* JavaScript ဖြင့် စည်းချက်ညီညီ လှိုင်းတွန့်ကစားမည့် SVG */
         .neon-heart-svg {
             position: absolute;
             width: 100%;
             height: 100%;
-            fill: rgba(25, 0, 5, 0.85); 
-            stroke: var(--neon-color, #ff3366);
-            stroke-width: 1.5;
+            fill: rgba(0, 0, 0, 0.6);
+            stroke: var(--neon-color, #ff1a4a);
+            stroke-width: 2;
             stroke-linecap: round;
-            /* နူးညံ့ပြီး လင်းပိုင်နေသော Glow အကျိုးသက်ရောက်မှု */
-            filter: drop-shadow(0 0 15px var(--neon-color, #ff3366))
-                    drop-shadow(0 0 40px var(--neon-color, #ff3366));
-            animation: pulseGlow 1.4s infinite alternate ease-in-out;
+            stroke-linejoin: round;
+            /* ပြင်းထန်ပြီး အထာကျသော EDM နီယွန်မီးရောင် */
+            filter: drop-shadow(0 0 15px var(--neon-color, #ff1a4a))
+                    drop-shadow(0 0 45px var(--neon-color, #ff1a4a));
+            will-change: transform, filter;
             z-index: 2;
         }
 
@@ -74,21 +76,16 @@
             position: absolute;
             font-size: 16rem;
             color: var(--neon-color, #00f0ff);
-            opacity: 0.55;
+            opacity: 0.5;
             filter: drop-shadow(0 0 20px var(--neon-color, #00f0ff));
-            animation: wingFlap 0.7s infinite alternate ease-in-out;
+            animation: wingFlap 0.5s infinite alternate ease-in-out;
             z-index: 1;
             user-select: none;
         }
 
         @keyframes wingFlap {
-            0% { transform: scaleX(0.85) scaleY(0.95); opacity: 0.35; }
-            100% { transform: scaleX(1.15) scaleY(1.05); opacity: 0.65; }
-        }
-
-        @keyframes pulseGlow {
-            0% { transform: scale(1); }
-            100% { transform: scale(1.06); }
+            0% { transform: scaleX(0.85) scaleY(0.95); opacity: 0.3; }
+            100% { transform: scaleX(1.15) scaleY(1.05); opacity: 0.6; }
         }
         
         .love-text {
@@ -102,7 +99,6 @@
             z-index: 11; 
             width: 85%;
             margin-top: -25px; 
-            animation: textPulse 1.4s infinite alternate ease-in-out;
         }
 
         .sub-text {
@@ -112,12 +108,6 @@
             text-shadow: 0 0 10px rgba(0,0,0,1);
         }
 
-        @keyframes textPulse {
-            0% { transform: scale(1); }
-            100% { transform: scale(1.04); }
-        }
-
-        /* ✨ ဖုန်းမထစ်စေရန် ပေါ့ပါးချောမွေ့အောင် ပြင်ဆင်ထားသော စာလုံးမှုန်ဒီဇိုင်း */
         .burst-element { 
             position: absolute; 
             user-select: none;
@@ -126,23 +116,25 @@
             pointer-events: none;
             font-weight: bold;
             filter: drop-shadow(0 0 6px currentColor);
-            will-change: transform, opacity; /* ဖုန်း Hardware ကို ပိုမိုမြန်ဆန်စေရန် ကူညီပေးသောစနစ် */
+            will-change: transform, opacity;
         }
     </style>
 </head>
 <body>
 
-    <!-- မီးပန်းများနှင့် ကြယ်စင်မှုန်များဆွဲမည့်နေရာ -->
+    <!-- တကယ့်မီးပန်းများနှင့် ကြယ်စင်မှုန်များဆွဲမည့် ကင်းဗတ် -->
     <canvas id="starfield"></canvas>
 
-    <!-- ဗဟိုချက် အချစ်နီယွန်ကမ္ဘာ -->
     <div class="main-content" id="mainContent">
         <div class="center-container">
             <div class="neon-heart-wrapper">
                 <div class="heart-wings">🦋</div>
+                
+                <!-- ⚡ 🎵 လှိုင်းတွန့်ဒီဇိုင်းဖြစ်အောင် ဖွဲ့စည်းမှုပုံစံ ID တပ်ဆင်ထားသော SVG Path -->
                 <svg class="neon-heart-svg" viewBox="0 0 32 32">
-                    <path d="M16,28.261L4.636,16.897C1.411,13.672,1.411,8.435,4.636,5.21c3.225-3.225,8.462-3.225,11.364,0 c2.902-3.225,8.139-3.225,11.364,0c3.225,3.225,3.225,8.462,0,11.687L16,28.261z" stroke-width="1.2" stroke-linejoin="round"/>
+                    <path id="visualizerHeart" d="M16,28.261L4.636,16.897C1.411,13.672,1.411,8.435,4.636,5.21c3.225-3.225,8.462-3.225,11.364,0 c2.902-3.225,8.139-3.225,11.364,0c3.225,3.225,3.225,8.462,0,11.687L16,28.261z" />
                 </svg>
+                
                 <div class="love-text">
                     <div>ချစ်တယ် ❤️</div>
                     <div class="sub-text">မင်းလေးတစ်ယောက်တည်းကိုပဲ...</div>
@@ -151,7 +143,7 @@
         </div>
     </div>
     <script>
-        var neonColors = ['#ff3366', '#00f0ff', '#bd00ff', '#00ff66', '#ff00aa', '#ffaa00', '#ff00ff', '#00ffff'];
+        var neonColors = ['#ff1a4a', '#00f0ff', '#bd00ff', '#00ff66', '#ff00aa', '#ffaa00', '#ff00ff', '#00ffff'];
         var romanticShapes = ['❤️', '💖', '💝', '💘', '💕', '💗', '💓', '💞', '🌸', '🌹', '✨'];
         
         var colorIndex = 0;
@@ -159,9 +151,9 @@
 
         window.onload = function() {
             initAdvancedEffects();
-            // ဖုန်းမထစ်စေရန် အရှိန်ကို အသင့်တော်ဆုံး ၅၀ မီလီစက္ကန့် ညှိပေးထားပါတယ်
             setInterval(createExplosiveElement, 50); 
             startNeonCycle();
+            startEDMVisualizer(); // ⚡ EDM လှိုင်းတွန့်စနစ်အား စတင်မောင်းနှင်ခြင်း
         };
 
         function startNeonCycle() {
@@ -175,6 +167,32 @@
                 if (heartSvg) heartSvg.style.setProperty('--neon-color', nextColor);
                 if (wings) wings.style.setProperty('--neon-color', wingColor);
             }, 1200);
+        }
+
+        // 🎵 ⚡ EDM Music စည်းချက်အတိုင်း အသည်းပုံဘောင်များကို အတွန့်လိုင်းများအဖြစ် ဖန်တီးပေးသည့် အဆင့်မြင့်စနစ်
+        function startEDMVisualizer() {
+            var heartPath = document.getElementById('visualizerHeart');
+            var heartSvg = document.querySelector('.neon-heart-svg');
+            var baseD = "M16,28.261L4.636,16.897C1.411,13.672,1.411,8.435,4.636,5.21c3.225-3.225,8.462-3.225,11.364,0 c2.902-3.225,8.139-3.225,11.364,0c3.225,3.225,3.225,8.462,0,11.687L16,28.261z";
+            
+            var time = 0;
+            setInterval(function() {
+                time += 0.4;
+                // EDM Bass သံစဉ်ကဲ့သို့ ပြင်းထန်ပြီး မြန်ဆန်သော လှိုင်းအတွန့်အတက်အကျ တွက်ချက်ခြင်း
+                var beatFactor = 1 + Math.abs(Math.sin(time * 2)) * 0.08; 
+                var waveIntensity = Math.sin(time * 3) * 0.8; 
+                
+                if (heartSvg) {
+                    heartSvg.style.transform = 'scale(' + beatFactor + ')';
+                }
+                
+                // SVG Path ကို လှိုင်းအတွန့်ပုံစံဖြစ်အောင် ပုံပျက် (Deform) စေခြင်း
+                if (heartPath) {
+                    // အခြေခံပုံသဏ္ဌာန်ပေါ်တွင် လျှပ်စစ်လှိုင်းအတွန့်ကဲ့သို့ ကခုန်စေရန် ချိန်ညှိခြင်း
+                    var waveD = "M16,28.261 L" + (4.636 + waveIntensity) + "," + (16.897 - waveIntensity) + " C" + (1.411 - waveIntensity) + "," + (13.672 + waveIntensity) + " " + (1.411 + waveIntensity) + "," + (8.435 - waveIntensity) + " " + (4.636) + "," + (5.21 + waveIntensity) + " C" + (7.861 - waveIntensity) + "," + (1.985) + " " + (13.098 + waveIntensity) + "," + (1.985) + " 16," + (5.21 - waveIntensity) + " C" + (18.902 - waveIntensity) + "," + (1.985) + " " + (24.139 + waveIntensity) + "," + (1.985) + " " + (27.364) + "," + (5.21 - waveIntensity) + " C" + (30.589 + waveIntensity) + "," + (8.435 + waveIntensity) + " " + (30.589 - waveIntensity) + "," + (13.672 - waveIntensity) + " " + (27.364 - waveIntensity) + "," + (16.897) + " L16,28.261z";
+                    heartPath.setAttribute('d', waveD);
+                }
+            }, 40); // 0.04 စက္ကန့်တိုင်း စည်းချက်ညီညီ အလွန်မြန်ဆန်စွာ လှိုင်းထစေခြင်း
         }
 
         function createExplosiveElement() {
@@ -197,7 +215,6 @@
             var duration = Math.random() * 1.5 + 2.5; 
             var uniqueStyleName = 'burstAnim_' + Math.random().toString(36).substr(2, 9);
             
-            // 🌊 ဖုန်းမှာ အချောမွေ့ဆုံးဖြစ်မည့် အလှိုင်းအတွန့် ဖော်မြူလာ
             var amp = Math.random() * 50 + 30; 
             var moveX1 = Math.cos(angle) * (maxDistance * 0.3) + Math.sin(angle) * amp;
             var moveY1 = Math.sin(angle) * (maxDistance * 0.3) - Math.cos(angle) * amp;
@@ -233,40 +250,40 @@
             canvas.height = window.innerHeight;
 
             var stars = [];
-            var fireworks = [];
+            var fireworkParticles = [];
 
-            for(var i=0; i<45; i++) { /* ဖုန်းပိုပေါ့ပါးစေရန် ကြယ်အရေအတွက်ကို လျှော့ညှိထားပါသည် */
+            for(var i=0; i<40; i++) {
                 stars.push({
                     x: Math.random() * canvas.width,
                     y: Math.random() * canvas.height,
                     r: Math.random() * 1.2 + 0.5,
-                    speed: Math.random() * 0.3 + 0.1
+                    speed: Math.random() * 0.2 + 0.1
                 });
             }
 
-            function spawnFirework() {
-                var targetX = Math.random() * canvas.width;
-                var targetY = Math.random() * (canvas.height * 0.6) + 60;
+            function createRealFirework() {
+                var startX = Math.random() * canvas.width;
+                var startY = Math.random() * (canvas.height * 0.5) + 60;
                 var fwColor = neonColors[Math.floor(Math.random() * neonColors.length)];
                 
-                // ပေါက်ကွဲမှုန်အရေအတွက်ကို ၃၅ စီဖြင့် အချောမွေ့ဆုံးဖြစ်အောင် ပြင်ထားပါသည်
-                for(var j=0; j<35; j++) {
-                    var angle = (j / 35) * Math.PI * 2;
-                    var speed = Math.random() * 3 + 1.2; 
-                    fireworks.push({
-                        x: targetX,
-                        y: targetY,
+                for(var j=0; j<60; j++) {
+                    var angle = Math.random() * Math.PI * 2;
+                    var speed = Math.random() * 4 + 1; 
+                    fireworkParticles.push({
+                        x: startX,
+                        y: startY,
                         vx: Math.cos(angle) * speed,
                         vy: Math.sin(angle) * speed,
                         alpha: 1,
                         color: fwColor,
-                        size: Math.random() * 1.8 + 2.2
+                        size: Math.random() * 1.5 + 1.5,
+                        gravity: 0.04, 
+                        fade: Math.random() * 0.015 + 0.01
                     });
                 }
             }
 
-            // ၄၅၀ မီလီစက္ကန့်တိုင်း မီးပန်းများ ဝေဆာစွာ ပေါက်ကွဲစေခြင်း
-            setInterval(spawnFirework, 450);
+            setInterval(createRealFirework, 500);
 
             function draw() {
                 if (!ctx || !canvas) return;
@@ -281,24 +298,29 @@
                     if(s.y > canvas.height) s.y = 0;
                 });
 
-                fireworks.forEach(function(f, index) {
-                    ctx.fillStyle = f.color;
-                    ctx.globalAlpha = f.alpha;
+                fireworkParticles.forEach(function(p, index) {
+                    ctx.save();
+                    ctx.globalAlpha = p.alpha;
+                    ctx.fillStyle = p.color;
                     
-                    // ဖုန်းမထစ်စေရန် လေးလံသော shadowBlur အစား ရိုးရိုး font အလှဖြင့် ထိန်းထားပါသည်
-                    ctx.font = (f.size * 4.8) + "px Arial";
-                    ctx.fillText("💖", f.x, f.y);
+                    ctx.shadowBlur = 10;
+                    ctx.shadowColor = p.color;
                     
-                    f.x += f.vx;
-                    f.y += f.vy;
-                    f.alpha -= 0.012; 
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.restore();
                     
-                    if(f.alpha <= 0) {
-                        fireworks.splice(index, 1);
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    p.vy += p.gravity; 
+                    p.alpha -= p.fade; 
+                    
+                    if(p.alpha <= 0) {
+                        fireworkParticles.splice(index, 1);
                     }
                 });
-                ctx.globalAlpha = 1;
-
+                
                 requestAnimationFrame(draw);
             }
             draw();

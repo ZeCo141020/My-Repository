@@ -17,6 +17,13 @@
             position: relative;
         }
 
+        #starfield {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
         .main-content {
             width: 100%;
             height: 100%;
@@ -25,13 +32,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            z-index: 2;
-        }
-
-        #starfield {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 1;
+            z-index: 3;
             pointer-events: none;
         }
         
@@ -41,6 +42,7 @@
             justify-content: center;
             align-items: center;
             z-index: 10;
+            pointer-events: auto;
         }
 
         .neon-heart-wrapper {
@@ -56,7 +58,7 @@
             position: absolute;
             width: 100%;
             height: 100%;
-            fill: rgba(20, 0, 5, 0.7); 
+            fill: rgba(20, 0, 5, 0.8); 
             stroke: var(--neon-color, #ff0055);
             stroke-width: 1.5;
             stroke-linecap: round;
@@ -109,24 +111,21 @@
             text-shadow: 0 0 10px rgba(0,0,0,1);
         }
 
-        @keyframes textPulse {
-            0% { transform: scale(1); }
-            100% { transform: scale(1.05); }
-        }
-
-        /* 💎 အရပ် ၁၆ မျက်နှာသို့ လွင့်စင်မည့် ပုံရုပ်မှုန်များ */
         .burst-element { 
             position: absolute; 
             user-select: none;
-            z-index: 5;
-            top: 50%; left: 50%; /* စခရင်အလယ်ဗဟိုမှ စတင်ရန် အသေသတ်မှတ်ခြင်း */
+            z-index: 20;
+            top: 50%; left: 50%;
+            pointer-events: none;
         }
     </style>
 </head>
 <body>
 
+    <!-- မီးပန်းများဆွဲမည့် ကင်းဗတ်နောက်ခံ -->
     <canvas id="starfield"></canvas>
 
+    <!-- အလယ်က အသည်းပုံကြီးနှင့် စာသားများ -->
     <div class="main-content" id="mainContent">
         <div class="center-container">
             <div class="neon-heart-wrapper">
@@ -141,7 +140,6 @@
             </div>
         </div>
     </div>
-
     <script>
         var neonColors = ['#ff0055', '#00f0ff', '#bd00ff', '#00ff66', '#ff00aa', '#ffaa00', '#ff00ff', '#00ffff'];
         var romanticShapes = ['❤️', '💖', '💝', '💘', '💕', '💗', '💓', '💞', '🌸', '🌹', '✨', '💎'];
@@ -151,7 +149,6 @@
 
         window.onload = function() {
             initAdvancedEffects();
-            // အသည်းပုံတွေ အရပ် ၁၆ မျက်နှာကို တရစပ်ပေါက်ကွဲထွက်စေမည့် အရှိန်
             setInterval(createExplosiveElement, 40); 
             startNeonCycle();
         };
@@ -169,7 +166,6 @@
             }, 1000);
         }
 
-        // 💎 🚀 အလယ်ဗဟိုမှ အရပ် ၁၆ မျက်နှာသို့ လွင့်စင်ထွက်စေမည့် စနစ်အမှန်
         function createExplosiveElement() {
             var item = document.createElement('div');
             item.classList.add('burst-element');
@@ -181,31 +177,28 @@
             shapeIndex = (shapeIndex + 1) % romanticShapes.length;
             colorIndex = (colorIndex + 1) % neonColors.length;
             
-            item.style.fontSize = (Math.random() * 30 + 35) + 'px';
+            item.style.fontSize = (Math.random() * 25 + 35) + 'px';
             
-            // 🧭 အရပ် ၁၆ မျက်နှာ ဒီဂရီတွက်ချက်မှု
             var angleIndex = Math.floor(Math.random() * 16);
             var angle = (angleIndex / 16) * Math.PI * 2;
             
-            // မျက်နှာပြင်အရွယ်အစားပေါ်မူတည်ပြီး အဝေးကြီးအထိ လွင့်ထွက်သွားစေရန် တွက်ချက်ခြင်း
-            var maxDistance = Math.max(window.innerWidth, window.innerHeight);
+            var maxDistance = Math.max(window.innerWidth, window.innerHeight) * 0.8;
             var moveX = Math.cos(angle) * maxDistance;
             var moveY = Math.sin(angle) * maxDistance;
             
-            var duration = Math.random() * 2 + 3; 
+            var duration = Math.random() * 1.5 + 2.5; 
             var uniqueStyleName = 'burstAnim_' + Math.random().toString(36).substr(2, 9);
             
             var styleSheet = document.createElement("style");
-            // အလယ်ကနေ အပြင်ဘက်ကို တန်းထွက်သွားစေမည့် CSS
             styleSheet.innerText = `@keyframes ${uniqueStyleName} {
-                0% { transform: translate(-50%, -50%) translate(0, 0) scale(0.3); opacity: 0; filter: drop-shadow(0 0 2px ${randomColor}) brightness(0.5); }
-                15% { opacity: 1; filter: drop-shadow(0 0 15px ${randomColor}) brightness(1.5); }
-                90% { opacity: 1; }
-                100% { transform: translate(-50%, -50%) translate(${moveX}px, ${moveY}px) scale(1.2); opacity: 0; }
+                0% { transform: translate(-50%, -50%) translate(0, 0) scale(0.3); opacity: 0; filter: drop-shadow(0 0 2px ${randomColor}) brightness(0.6); }
+                15% { opacity: 1; filter: drop-shadow(0 0 15px ${randomColor}) brightness(1.6); }
+                85% { opacity: 1; }
+                100% { transform: translate(-50%, -50%) translate(${moveX}px, ${moveY}px) scale(1.1); opacity: 0; }
             }`;
             document.head.appendChild(styleSheet);
             
-            item.style.animation = `${uniqueStyleName} ${duration}s cubic-bezier(0.1, 0.8, 0.3, 1) forwards`;
+            item.style.animation = `${uniqueStyleName} ${duration}s cubic-bezier(0.15, 0.85, 0.35, 1) forwards`;
             
             document.body.appendChild(item);
             
@@ -214,8 +207,6 @@
                 styleSheet.remove();
             }, duration * 1000);
         }
-
-        // 🎆 ✨ အနောက်ဘက်မှ မီးပန်းစနစ်
         function initAdvancedEffects() {
             var canvas = document.getElementById('starfield');
             if(!canvas) return;
@@ -242,7 +233,7 @@
                 
                 for(var j=0; j<25; j++) {
                     var angle = (j / 25) * Math.PI * 2;
-                    var speed = Math.random() * 2 + 1;
+                    var speed = Math.random() * 2 + 1.2;
                     fireworks.push({
                         x: targetX,
                         y: targetY,
@@ -268,27 +259,28 @@
                     ctx.fill();
                     s.y += s.speed;
                     if(s.y > canvas.height) s.y = 0;
-    <!-- (အပေါ်မှာ HTML နဲ့ CSS ကုဒ်တွေ ရှိနေပါလိမ့်မယ်) -->
+                });
 
-    <script>
-        // (ဒီကြားထဲမှာ မီးပန်းတွေ တွက်ချက်တဲ့ ကုဒ်အစပိုင်းတွေ ရှိနေပါမယ်)
+                fireworks.forEach(function(f, index) {
+                    ctx.fillStyle = f.color;
+                    ctx.globalAlpha = f.alpha;
+                    ctx.font = (f.size * 4.5) + "px Arial";
+                    ctx.fillText("💖", f.x, f.y);
+                    
+                    f.x += f.vx;
+                    f.y += f.vy;
+                    f.alpha -= 0.015;
+                    
+                    if(f.alpha <= 0) {
+                        fireworks.splice(index, 1);
+                    }
+                });
+                ctx.globalAlpha = 1;
 
-        // 👇 သင်မေးထားတဲ့ မီးပန်းကုဒ် အပိတ်ပိုင်းက ဒီလိုမျိုး နေရာမှာ ရှိနေရပါမယ်
-        fireworks.forEach(function(f, index) {
-            ctx.fillStyle = f.color;
-            ctx.globalAlpha = f.alpha;
-            ctx.font = (f.size * 4.5) + "px Arial";
-            ctx.fillText("💖", f.x, f.y);
-            f.x += f.vx;
-            f.y += f.vy;
-            f.alpha -= 0.015;
-            if(f.alpha <= 0) {
-                fireworks.splice(index, 1);
+                requestAnimationFrame(draw);
             }
-        });
-        ctx.globalAlpha = 1;
-        requestAnimationFrame(draw);
-        
-    </script> <!-- 👈 သေချာပေါက် ပိတ်ပေးရမည့် Script Tag -->
+            draw();
+        }
+    </script>
 </body>
 </html>

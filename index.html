@@ -19,7 +19,7 @@
         .love-text {
             text-align: center;
             color: #ff4d6d;
-            font-size: 3.5rem; /* စာသားကိုပါ နည်းနည်း ပိုကြီးပေးထားပါတယ် */
+            font-size: 3.5rem;
             font-weight: bold;
             text-shadow: 0 0 20px rgba(255, 77, 109, 0.8);
             z-index: 10;
@@ -27,7 +27,7 @@
         }
 
         .sub-text {
-            font-size: 2rem; /* စာတန်းငယ်ကိုပါ ပိုကြီးပေးထားပါတယ် */
+            font-size: 2rem;
             color: #fff;
             margin-top: 15px;
         }
@@ -38,16 +38,24 @@
             100% { transform: scale(1); text-shadow: 0 0 20px rgba(255, 77, 109, 0.8); }
         }
 
+        /* အသည်းပုံများ ကြွေဆင်းခြင်းနှင့် တွဲဖက်ထားသော Animation များ */
         .heart { 
             position: absolute; 
-            color: #ff1a40; 
-            animation: fall 5s linear infinite; /* ပိုကြီးလာလို့ အောက်ကျတဲ့နှုန်းကို ၅ စက္ကန့်အထိ ပိုနှေးပေးထားပါတယ် */
             user-select: none;
+            /* အောက်ကျခြင်း Animation (fall) နှင့် ပျောက်လိုက်ပေါ်လိုက်ဖြစ်ခြင်း Animation (twinkle) ကို တွဲသုံးထားခြင်း */
+            animation: fall 6s linear forwards, twinkle 1.5s ease-in-out infinite alternate;
         }
 
+        /* အောက်သို့ ကြွေဆင်းသည့် Animation */
         @keyframes fall {
-            0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+            0% { transform: translateY(-120px) rotate(0deg); }
+            100% { transform: translateY(100vh) rotate(360deg); }
+        }
+
+        /* ပျောက်လိုက် ပေါ်လိုက် (မှိတ်တုတ်မှိတ်တုတ်) ဖြစ်စေသည့် Animation */
+        @keyframes twinkle {
+            0% { opacity: 0.2; filter: drop-shadow(0 0 2px currentColor); }
+            100% { opacity: 1; filter: drop-shadow(0 0 15px currentColor); }
         }
     </style>
 </head>
@@ -59,20 +67,48 @@
     </div>
 
     <script>
-        function createHeart() {
+        // လှပသော အရောင်အသွေး (၈) မျိုး
+        const colors = ['#ff1a40', '#ff70a6', '#ff9770', '#ffd670', '#e9ff70', '#c295d8', '#70e000', '#00b4d8'];
+        
+        // 👇 အသည်းပုံ သီးသန့်ကိုမှ ပုံစံကွဲမျိုးစုံ (Unicode Hearts) ထည့်သွင်းထားခြင်း
+        const heartShapes = ['❤️', '💖', '💝', '💘', '💕', '💗', '💓', '💞'];
+
+        // အလှည့်ကျစနစ်အတွက် အရေအတွက် မှတ်သားမည့် ကိန်းရှင်များ
+        let colorIndex = 0;
+        let shapeIndex = 0;
+
+        function createSpecialHeart() {
             const heart = document.createElement('div');
             heart.classList.add('heart');
-            heart.innerText = '❤️';
-            heart.style.left = Math.random() * 100 + 'vw';
             
-            // 👇 ဒီနေရာမှာ အသည်းပုံအရွယ်အစားကို အနည်းဆုံး ၇၀ မှ အကြီးဆုံး ၁၂၀ ပစ်ဆယ် (px) အထိ ၂ ဆကျော် ပိုကြီးအောင် ပြင်လိုက်ပါပြီ
-            heart.style.fontSize = Math.random() * 50 + 70 + 'px'; 
+            // 👇 တစ်မျိုးပြီးတစ်မျိုး စနစ်တကျ အလှည့်ကျ ထွက်လာစေခြင်း (Sequential Mode)
+            heart.innerText = heartShapes[shapeIndex];
+            const randomColor = colors[colorIndex];
+            heart.style.color = randomColor;
+
+            // နောက်တစ်ကြိမ်အတွက် အညွှန်းကိန်းကို တစ်တိုးခြင်း (အဆုံးရောက်ရင် အစကပြန်စမည်)
+            shapeIndex = (shapeIndex + 1) % heartShapes.length;
+            colorIndex = (colorIndex + 1) % colors.length;
             
-            heart.style.animationDuration = Math.random() * 3 + 4 + 's';
+            // မျက်နှာပြင် ဘယ်/ညာ တည်နေရာကို ကျပန်းချပေးခြင်း
+            heart.style.left = Math.random() * 90 + 5 + 'vw';
+            
+            // အရွယ်အစားကို အကြီးကြီး (၇၀ မှ ၁၁၀ ပစ်ဆယ်) အတိုင်း ထားပေးထားပါတယ်
+            heart.style.fontSize = Math.random() * 40 + 70 + 'px'; 
+            
+            // ကျဆင်းနှုန်း အနှေးအမြန်ကို အနည်းငယ် ညှိပေးထားခြင်း
+            const duration = Math.random() * 2 + 5;
+            heart.style.animationName = 'fall, twinkle';
+            heart.style.animationDuration = `${duration}s, ${Math.random() * 0.5 + 1}s`;
+            
             document.body.appendChild(heart);
-            setTimeout(() => heart.remove(), 7000);
+            
+            // စခရင်အောက်ခြေရောက်ရင် ဖျက်ပစ်ခြင်း
+            setTimeout(() => heart.remove(), duration * 1000);
         }
-        setInterval(createHeart, 250); // ပုံကြီးသွားလို့ စခရင်မှာ ရှုပ်မနေအောင် ပွင့်နှုန်းကို မီလီစက္ကန့် ၂၅၀ ထားပေးပါတယ်
+
+        // မီလီစက္ကန့် ၃၀၀ တိုင်းမှာ အသည်းပုံတစ်ပွင့်စီ စနစ်တကျ အလှည့်ကျ ပွင့်ထွက်လာမည်
+        setInterval(createSpecialHeart, 300);
     </script>
 </body>
 </html>

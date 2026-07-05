@@ -19,7 +19,7 @@
         .love-text {
             text-align: center;
             color: #ff4d6d;
-            font-size: 2.8rem;
+            font-size: 3.5rem; /* စာသားကိုပါ နည်းနည်း ပိုကြီးပေးထားပါတယ် */
             font-weight: bold;
             text-shadow: 0 0 20px rgba(255, 77, 109, 0.8);
             z-index: 10;
@@ -27,9 +27,9 @@
         }
 
         .sub-text {
-            font-size: 1.6rem;
+            font-size: 2rem; /* စာတန်းငယ်ကိုပါ ပိုကြီးပေးထားပါတယ် */
             color: #fff;
-            margin-top: 10px;
+            margin-top: 15px;
         }
 
         @keyframes pulse {
@@ -41,12 +41,12 @@
         .heart { 
             position: absolute; 
             color: #ff1a40; 
-            animation: fall 4s linear infinite; /* ပိုကြီးလာတဲ့အတွက် ကျဆင်းနှုန်းကို ၄ စက္ကန့်အထိ အနည်းငယ် နှေးပေးထားပါတယ် */
+            animation: fall 5s linear infinite; /* ပိုကြီးလာလို့ အောက်ကျတဲ့နှုန်းကို ၅ စက္ကန့်အထိ ပိုနှေးပေးထားပါတယ် */
             user-select: none;
         }
 
         @keyframes fall {
-            0% { transform: translateY(-50px) rotate(0deg); opacity: 1; }
+            0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
             100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
         }
     </style>
@@ -63,16 +63,16 @@
             const heart = document.createElement('div');
             heart.classList.add('heart');
             heart.innerText = '❤️';
-            heart.style.left = Math.random() * 200 + 'vw';
+            heart.style.left = Math.random() * 100 + 'vw';
             
-            // 👇 ဒီနေရာမှာ အသည်းပုံရဲ့ အရွယ်အစားကို အနည်းဆုံး ၃၅ ကနေ အကြီးဆုံး ၆၅ ပစ်ဆယ် (px) အထိ ကြီးအောင် ပြင်ထားပါတယ်
-            heart.style.fontSize = Math.random() * 30 + 35 + 'px'; 
+            // 👇 ဒီနေရာမှာ အသည်းပုံအရွယ်အစားကို အနည်းဆုံး ၇၀ မှ အကြီးဆုံး ၁၂၀ ပစ်ဆယ် (px) အထိ ၂ ဆကျော် ပိုကြီးအောင် ပြင်လိုက်ပါပြီ
+            heart.style.fontSize = Math.random() * 50 + 70 + 'px'; 
             
-            heart.style.animationDuration = Math.random() * 2 + 3 + 's';
+            heart.style.animationDuration = Math.random() * 3 + 4 + 's';
             document.body.appendChild(heart);
-            setTimeout(() => heart.remove(), 5000);
+            setTimeout(() => heart.remove(), 7000);
         }
-        setInterval(createHeart, 200); // အသည်းပုံကြီးသွားလို့ ရှုပ်မနေအောင် ပွင့်ထွက်နှုန်းကို မီလီစက္ကန့် ၂၀၀ အထိ အနည်းငယ် ချိန်ပေးထားပါတယ်
+        setInterval(createHeart, 250); // ပုံကြီးသွားလို့ စခရင်မှာ ရှုပ်မနေအောင် ပွင့်နှုန်းကို မီလီစက္ကန့် ၂၅၀ ထားပေးပါတယ်
     </script>
 </body>
 </html>

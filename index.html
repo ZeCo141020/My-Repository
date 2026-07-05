@@ -54,20 +54,23 @@
             align-items: center;
         }
 
-        /* 💖 ပုံထဲကအတိုင်း စစ်မှန်တောက်ပသော ပန်းရောင်နီယွန်မီးချောင်း အသည်းပုံကြီးစတိုင်လ် */
+        /* 💖 ပုံထဲကအတိုင်း အတွင်းပိုင်း ပန်းရောင်စစ်စစ်နှင့် အပြင်ဘောင် နီယွန်မီးရောင် အသည်းပုံကြီးစတိုင်လ် */
         .neon-heart-main-svg {
             position: absolute;
             width: 100%;
             height: 100%;
-            fill: rgba(0, 0, 0, 0.7); 
-            stroke: #ff1a75; /* 👇 ပုံထဲကအတိုင်း လှပတောက်ပသော ပန်းရောင်စစ်စစ် (Solid Neon Pink) */
+            
+            /* 👇 ဤနေရာတွင် အလယ်အသည်းပုံကြီးအတွင်းပိုင်းကို နူးညံ့လှပသော ပန်းရောင်စစ်စစ် ထည့်သွင်းထားခြင်းဖြစ်ပါသည် */
+            fill: #ff66a3; 
+            
+            stroke: #ff1a75; 
             stroke-width: 2.2; 
             stroke-linecap: round;
             stroke-linejoin: round;
-            /* ပြင်းထန်ပြီး စူးရှတောက်ပသော နီယွန်မီးရောင် အလင်းတန်း */
-            filter: drop-shadow(0 0 12px #ff1a75) drop-shadow(0 0 35px #ff1a75);
+            /* စူးရှတောက်ပသော ပန်းရောင်နီယွန်မီးရောင် အလင်းတန်း */
+            filter: drop-shadow(0 0 15px #ff1a75) drop-shadow(0 0 40px #ff1a75);
             animation: heartbeatPulse 1.2s infinite alternate ease-in-out;
-            z-index: 5; /* အနောက်က ဥမင်လိုင်းတွေရဲ့ အရှေ့မှာ ရှိနေစေရန် */
+            z-index: 5; /* ဥမင်လိုင်းများ၏ အရှေ့ထိပ်ဆုံးတွင် ထားရှိခြင်း */
             transform-origin: center;
             will-change: transform;
         }
@@ -83,7 +86,7 @@
             stroke-linejoin: round;
             transform-origin: center;
             will-change: transform, opacity;
-            z-index: 2; /* အလယ်အသည်းပုံကြီးရဲ့ အနောက်ဘက်တွင် ထားရှိခြင်း */
+            z-index: 2; /* အလယ်အသည်းပုံကြီး၏ အနောက်ဘက်တွင် ထားရှိခြင်း */
         }
 
         @keyframes heartbeatPulse {
@@ -136,10 +139,9 @@
 
     <div class="main-content" id="mainContent">
         <div class="center-container">
-            <!-- ⚡ ဥမင်လိုင်းအထပ်ထပ်ထွက်ရန် Container ID တပ်ဆင်ထားခြင်း -->
             <div class="neon-heart-wrapper" id="heartTunnelContainer">
                 
-                <!-- 💖 အလယ်က ပန်းရောင်နီယွန်အသည်းပုံကြီး Outline အသစ် -->
+                <!-- 💖 အလယ်က အတွင်းပန်းရောင်စစ်စစ် နီယွန်အသည်းပုံကြီး Outline အသစ် -->
                 <svg class="neon-heart-main-svg" viewBox="0 0 32 32">
                     <path d="M16,28.261L4.636,16.897C1.411,13.672,1.411,8.435,4.636,5.21c3.225-3.225,8.462-3.225,11.364,0 c2.902-3.225,8.139-3.225,11.364,0c3.225,3.225,3.225,8.462,0,11.687L16,28.261z" stroke-width="1.2" stroke-linejoin="round"/>
                 </svg>
@@ -152,7 +154,6 @@
         </div>
     </div>
     <script>
-        // 🎨 ပုံဟောင်းထဲကအတိုင်း ခရမ်းရောင်နှင့် ပန်းရောင်နီယွန် သီးသန့်အရောင်နှစ်မျိုးတည်းကို သုံးထားခြင်း ဖြစ်ပါသည်
         var tunnelColors = ['#bd00ff', '#ff00aa', '#9d00ff', '#ff0077'];
         var neonColors = ['#ff1a4a', '#00f0ff', '#bd00ff', '#00ff66', '#ff00aa', '#ffaa00', '#ff00ff', '#00ffff'];
         var romanticShapes = ['❤️', '💖', '💝', '💘', '💕', '💗', '💓', '💞', '🌸', '🌹', '✨'];
@@ -163,10 +164,9 @@
         window.onload = function() {
             initFestivalFireworks(); 
             setInterval(createExplosiveElement, 55); 
-            startNeonHeartTunnelEffect(); // 🌟 ဥမင်လှိုဏ်ခေါင်းအထပ်ထပ်စနစ်အား ကျိန်းသေပေါက် မောင်းနှင်ခြင်း
+            startNeonHeartTunnelEffect(); // 🌟 ဥမင်လှိုဏ်ခေါင်းအထပ်ထပ်စနစ်အား မောင်းနှင်ခြင်း
         };
 
-        // 🌟 🚀 ဤကုဒ်လိုင်းဖြင့် အနောက်ကနေ အပြင်ဘက်သို့ Neon Heart Tunnel အထပ်ထပ် ပွင့်ထွက်စေခြင်း ဖြစ်ပါသည်
         function startNeonHeartTunnelEffect() {
             var container = document.getElementById('heartTunnelContainer');
             var heartPathD = 'M16,28.261L4.636,16.897C1.411,13.672,1.411,8.435,4.636,5.21c3.225-3.225,8.462-3.225,11.364,0 c2.902-3.225,8.139-3.225,11.364,0c3.225,3.225,3.225,8.462,0,11.687L16,28.261z';
@@ -176,7 +176,6 @@
             function spawnTunnelLine() {
                 if (!container) return;
 
-                // SVG အသည်းပုံလိုင်းအသစ် ဖန်တီးခြင်း
                 var svg = document.createElementNS("http://w3.org", "svg");
                 svg.setAttribute("class", "tunnel-heart-line");
                 svg.setAttribute("viewBox", "0 0 32 32");
@@ -185,19 +184,16 @@
                 path.setAttribute("d", heartPathD);
                 svg.appendChild(path);
 
-                // ခရမ်းရောင်နှင့် ပန်းရောင်ကိုသာ စနစ်တကျ ချပေးခြင်း
                 var currentLineColor = tunnelColors[cycleIdx % tunnelColors.length];
                 svg.style.stroke = currentLineColor;
                 svg.style.filter = 'drop-shadow(0 0 8px ' + currentLineColor + ') drop-shadow(0 0 20px ' + currentLineColor + ')';
                 cycleIdx++;
 
-                // အလယ်အသည်းပုံကြီး (index 5) ရဲ့ နောက်ကွက်တွင် နေရာချပေးခြင်း
                 container.insertBefore(svg, container.firstChild);
 
                 var animId = 'tunnel_' + Math.random().toString(36).substr(2, 9);
                 var styleElement = document.createElement("style");
                 
-                // 3D ဥမင်လှိုဏ်ခေါင်းစတိုင်လ် အနောက်ကနေ အရှေ့ကို အထပ်ထပ် ပျံထွက်လာစေမည့် CSS
                 styleElement.innerText = `@keyframes ${animId} {
                     0% { transform: scale(0.1); opacity: 0; }
                     15% { opacity: 1; }
@@ -213,7 +209,6 @@
                     styleElement.remove();
                 }, 3500);
             }
-            // ၀.၃၅ စက္ကန့်တိုင်း ခရမ်း/ပန်းရောင် နီယွန်အသည်းပုံအသစ်တစ်လိုင်း အဆက်မပြတ် အထပ်ထပ် ပွင့်ထွက်လာစေခြင်း
             setInterval(spawnTunnelLine, 350);
         }
 
@@ -272,14 +267,13 @@
             canvas.height = window.innerHeight;
 
             var fireworkSparks = [];
-            var glowDustParticles = []; // 🌟 ပုံသစ်အတိုင်း အသည်းပတ်လည်က ကြယ်မှုန်များအတွက် စနစ်
+            var glowDustParticles = []; 
             var festivalColors = ['#00f0ff', '#ff1a4a', '#ffd670', '#ff00aa', '#bd00ff', '#ff9770', '#00ff66'];
 
-            // အသည်းပုံပတ်လည်တွင် လက်လက်ထနေမည့် ရွှေရောင်ကြယ်မှုန် ၄၅ စီ ကြိုတင်ဖန်တီးခြင်း
             for(var i=0; i<45; i++) {
                 glowDustParticles.push({
-                    angle: Math.random() * Math.PI * 2,
-                    radius: Math.random() * 40 + 130, // အသည်းပုံကြီး၏ ဘေးပတ်လည် အကွာအဝေး
+                    angle: Math.random() * Math.PI * 2;
+                    radius: Math.random() * 40 + 130, 
                     speed: Math.random() * 0.02 + 0.01,
                     size: Math.random() * 1.5 + 1.2,
                     brightness: Math.random() * 0.5 + 0.5
@@ -308,7 +302,7 @@
                 }
             }
 
-            setInterval(spawnFestivalFirework, 480); // တရစပ်ဖောက်ပေးခြင်း
+            setInterval(spawnFestivalFirework, 480); 
 
             function drawFestivalEffect() {
                 if (!ctx || !canvas) return;
@@ -316,25 +310,23 @@
                 ctx.fillStyle = "rgba(0, 0, 0, 0.16)";
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-                // ၁။ 🌟 ပုံသစ်အတိုင်း အသည်းပုံကြီးပတ်လည်တွင် ရစ်ဝိုင်းနေသော ကြယ်မှုန်များဆွဲခြင်း
                 var centerX = canvas.width / 2;
                 var centerY = canvas.height / 2;
                 
                 glowDustParticles.forEach(function(d) {
-                    d.angle += d.speed; // ပတ်ချာလည် လည်ပတ်နေစေရန်
+                    d.angle += d.speed; 
                     var dustX = centerX + Math.cos(d.angle) * d.radius;
-                    var dustY = centerY + Math.sin(d.angle) * d.radius * 0.9; // အသည်းပုံစံ အနည်းငယ် ကွေးညွတ်စေရန်
+                    var dustY = centerY + Math.sin(d.angle) * d.radius * 0.9; 
                     
                     ctx.save();
-                    ctx.fillStyle = "#ffd670"; // လှပသော ရွှေရောင်ကြယ်မှုန်အလင်း
-                    ctx.globalAlpha = Math.abs(Math.sin(d.angle)) * d.brightness; // မှိတ်တုတ်မှိတ်တုတ် ဖြစ်စေရန်
+                    ctx.fillStyle = "#ffd670"; 
+                    ctx.globalAlpha = Math.abs(Math.sin(d.angle)) * d.brightness; 
                     ctx.beginPath();
                     ctx.arc(dustX, dustY, d.size, 0, Math.PI * 2);
                     ctx.fill();
                     ctx.restore();
                 });
 
-                // ၂။ တကယ့်ပွဲတော်မီးပန်းများ ဆွဲခြင်း
                 fireworkSparks.forEach(function(p, index) {
                     ctx.save();
                     ctx.globalAlpha = p.alpha;

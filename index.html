@@ -6,7 +6,7 @@
     <title>For You ❤️</title>
     <style>
         body { 
-            background: radial-gradient(circle, #0e0003 0%, #000000 100%); 
+            background: radial-gradient(circle, #1a0007 0%, #000000 100%); 
             overflow: hidden; 
             margin: 0; 
             font-family: 'Pyidaungsu', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -25,6 +25,7 @@
             align-items: center;
         }
 
+        /* 🎆 မီးပန်းနှင့် ကြယ်စင်မှုန်များဆွဲမည့်နေရာ */
         #starfield {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -41,79 +42,95 @@
             z-index: 10;
         }
 
+        /* 🦋 🌟 လိပ်ပြာတောင်ပံပါဝင်သော အလယ်ဗဟို နီယွန်အသည်းပုံ Container */
         .neon-heart-wrapper {
             position: relative;
-            width: 280px;
-            height: 280px;
+            width: 320px;
+            height: 320px;
             display: flex;
             justify-content: center;
             align-items: center;
         }
 
-        /* တောက်ပသော နီယွန်မီးချောင်း အကျိုးသက်ရောက်မှု */
+        /* စစ်မှန်သော နီယွန်မီးချောင်း အကျိုးသက်ရောက်မှု */
         .neon-heart-svg {
-            width: 100%;
-            height: 100%;
+            width: 80%;
+            height: 80%;
             fill: none;
             stroke: var(--neon-color, #ff0055);
             stroke-width: 1.5;
             stroke-linecap: round;
-            filter: drop-shadow(0 0 8px var(--neon-color, #ff0055))
-                    drop-shadow(0 0 20px var(--neon-color, #ff0055))
-                    drop-shadow(0 0 40px var(--neon-color, #ff0055));
-            animation: pulseGlow 1.5s infinite alternate ease-in-out;
+            filter: drop-shadow(0 0 10px var(--neon-color, #ff0055))
+                    drop-shadow(0 0 25px var(--neon-color, #ff0055))
+                    drop-shadow(0 0 50px var(--neon-color, #ff0055));
+            animation: pulseGlow 1.2s infinite alternate ease-in-out;
+            z-index: 3;
         }
 
-        .neon-lightning {
+        /* 🦋 လိပ်ပြာနီယွန်တောင်ပံ ဒီဇိုင်း */
+        .heart-wings {
             position: absolute;
-            bottom: -20px;
-            font-size: 4.5rem;
-            color: #fff;
-            animation: boltFlicker 1.5s infinite alternate ease-in-out;
+            font-size: 15rem;
+            color: var(--neon-color, #00f0ff);
+            opacity: 0.7;
+            filter: drop-shadow(0 0 20px var(--neon-color, #00f0ff));
+            animation: wingFlap 0.6s infinite alternate ease-in-out;
+            z-index: 2;
+            user-select: none;
+        }
+
+        @keyframes wingFlap {
+            0% { transform: scaleX(0.8) scaleY(1); opacity: 0.5; }
+            100% { transform: scaleX(1.1) scaleY(1.05); opacity: 0.8; }
         }
 
         @keyframes pulseGlow {
-            0% { transform: scale(1); opacity: 0.9; }
-            100% { transform: scale(1.06); opacity: 1; }
-        }
-
-        @keyframes boltFlicker {
-            0% { color: #00f0ff; filter: drop-shadow(0 0 10px #00f0ff) drop-shadow(0 0 30px #00f0ff); transform: scale(0.95); }
-            100% { color: #ff00ff; filter: drop-shadow(0 0 15px #ff00ff) drop-shadow(0 0 35px #ff00ff); transform: scale(1.05); }
+            0% { transform: scale(1); }
+            100% { transform: scale(1.08); }
         }
         
         .love-text {
             text-align: center;
             color: #fff;
-            font-size: 3.5rem;
+            font-size: 3.8rem;
             font-weight: bold;
-            text-shadow: 0 0 20px rgba(0,0,0,1);
+            text-shadow: 0 0 25px rgba(0,0,0,1), 0 0 10px var(--neon-color, #ff0055);
             pointer-events: none;
-            margin-top: 45px;
+            margin-top: 35px;
+            animation: textPulse 2s infinite alternate;
         }
 
         .sub-text {
-            font-size: 2rem;
+            font-size: 2.2rem;
             color: #ffd670;
             margin-top: 15px;
             text-shadow: 0 0 15px rgba(0,0,0,1);
         }
 
+        @keyframes textPulse {
+            0% { transform: scale(1); text-shadow: 0 0 25px rgba(0,0,0,1); }
+            100% { transform: scale(1.03); text-shadow: 0 0 35px var(--neon-color, #ff0055); }
+        }
+
+        /* 💎 အထပ်ထပ် ကြွေဆင်းမည့် ကျောက်မျက်နီယွန်များ */
         .falling-element { 
             position: absolute; 
             user-select: none;
-            animation: fall 6s linear forwards, twinkle 1.5s ease-in-out infinite alternate;
+            animation: fall 5s linear forwards, twinkle 0.25s ease-in-out infinite alternate; /* 👇 အလွန်မြန်ဆန်သော လျှပ်စီးပေါ်ပျောက်လှိုင်း 0.25s */
             z-index: 5;
         }
 
         @keyframes fall {
-            0% { transform: translateY(-120px) rotate(0deg) scale(0.5); }
-            100% { transform: translateY(100vh) rotate(360deg) scale(1); }
+            0% { transform: translateY(-120px) rotate(0deg) scale(0.4); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg) scale(1.1); opacity: 0; }
         }
 
+        /* ကျောက်မျက်ရတနာလို လက်လက်ထပြီး အလင်းပြန်စေမည့် အမြန်နှုန်း Animation */
         @keyframes twinkle {
-            0% { opacity: 0.2; filter: drop-shadow(0 0 2px currentColor); }
-            100% { opacity: 1; filter: drop-shadow(0 0 15px currentColor); }
+            0% { opacity: 0.05; filter: drop-shadow(0 0 2px currentColor) brightness(0.5); }
+            100% { opacity: 1; filter: drop-shadow(0 0 30px currentColor) brightness(1.8); }
         }
     </style>
 </head>
@@ -124,13 +141,15 @@
         
         <div class="center-container">
             <div class="neon-heart-wrapper">
+                <!-- 🦋 လိပ်ပြာတောင်ပံ -->
+                <div class="heart-wings">🦋</div>
+                
                 <svg class="neon-heart-svg" viewBox="0 0 32 32">
                     <path d="M16,28.261L4.636,16.897C1.411,13.672,1.411,8.435,4.636,5.21c3.225-3.225,8.462-3.225,11.364,0 c2.902-3.225,8.139-3.225,11.364,0c3.225,3.225,3.225,8.462,0,11.687L16,28.261z" stroke-width="1.2" stroke-linejoin="round"/>
                     <line x1="11" y1="19" x2="21" y2="19" stroke="white" stroke-width="0.8" opacity="0.8"/>
                     <line x1="12.5" y1="21" x2="19.5" y2="21" stroke="white" stroke-width="0.8" opacity="0.6"/>
                     <line x1="14" y1="23" x2="18" y2="24" stroke="white" stroke-width="0.8" opacity="0.4"/>
                 </svg>
-                <div class="neon-lightning">⚡</div>
             </div>
 
             <div class="love-text">
@@ -141,27 +160,32 @@
     </div>
 
     <script>
-        var neonColors = ['#ff0055', '#00f0ff', '#bd00ff', '#00ff66', '#ff00aa', '#ffaa00'];
-        var romanticShapes = ['❤️', '💖', '💝', '💘', '💕', '💗', '💓', '💞', '🌸', '✨'];
+        var neonColors = ['#ff0055', '#00f0ff', '#bd00ff', '#00ff66', '#ff00aa', '#ffaa00', '#ff00ff', '#00ffff'];
+        // 🌹 🌸 အသည်းပုံများနှင့် နှင်းဆီပွင့်ဖတ်များကို ပေါင်းစပ်ထားခြင်း
+        var romanticShapes = ['❤️', '💖', '💝', '💘', '💕', '💗', '💓', '💞', '🌸', '🌹', '✨', '💎'];
         
         var colorIndex = 0;
         var shapeIndex = 0;
 
         window.onload = function() {
-            initStarfield();
-            setInterval(createRomanticElement, 250);
+            initAdvancedEffects();
+            // 👇 မုန်တိုင်းအလား အဆက်မပြတ် အထပ်ထပ်ရွာချစေရန် အရှိန်ကို မီလီစက္ကန့် ၅၀ (0.05 စက္ကန့်) အထိ တင်ထားပါတယ်
+            setInterval(createRomanticElement, 50); 
             startNeonCycle();
         };
 
         function startNeonCycle() {
             var heartSvg = document.querySelector('.neon-heart-svg');
+            var wings = document.querySelector('.heart-wings');
             var idx = 0;
             setInterval(function() {
-                if (heartSvg) {
-                    idx = (idx + 1) % neonColors.length;
-                    heartSvg.style.setProperty('--neon-color', neonColors[idx]);
-                }
-            }, 1500);
+                idx = (idx + 1) % neonColors.length;
+                var nextColor = neonColors[idx];
+                var wingColor = neonColors[(idx + 2) % neonColors.length]; // တောင်ပံကို အရောင်တစ်မျိုး ခွဲပြခြင်း
+                
+                if (heartSvg) heartSvg.style.setProperty('--neon-color', nextColor);
+                if (wings) wings.style.setProperty('--neon-color', wingColor);
+            }, 1200);
         }
 
         function createRomanticElement() {
@@ -175,18 +199,20 @@
             shapeIndex = (shapeIndex + 1) % romanticShapes.length;
             colorIndex = (colorIndex + 1) % neonColors.length;
             
-            item.style.left = (Math.random() * 92 + 4) + 'vw';
-            item.style.fontSize = (Math.random() * 25 + 50) + 'px'; 
+            item.style.left = (Math.random() * 96 + 2) + 'vw';
+            // အရွယ်အစား စုံလင်စေရန် ၃၅ မှ ၈၅ အထိ ချိန်ညှိထားခြင်း
+            item.style.fontSize = (Math.random() * 50 + 35) + 'px'; 
             
-            var duration = Math.random() * 2 + 5;
+            var duration = Math.random() * 3 + 3; // ပိုမိုမြန်ဆန်စွာ ကြွေဆင်းစေရန်
             item.style.animationName = 'fall, twinkle';
-            item.style.animationDuration = duration + 's, ' + (Math.random() * 0.5 + 0.8) + 's';
+            item.style.animationDuration = duration + 's, ' + (Math.random() * 0.1 + 0.15) + 's';
             
             document.body.appendChild(item);
             setTimeout(function() { item.remove(); }, duration * 1000);
         }
 
-        function initStarfield() {
+        // 🎆 ✨ အနောက်ကမ္ဘာမှ ကြယ်စင်လွင့်မြောခြင်းနှင့် မီးပန်းပေါက်ကွဲခြင်း စနစ်
+        function initAdvancedEffects() {
             var canvas = document.getElementById('starfield');
             if(!canvas) return;
             var ctx = canvas.getContext('2d');
@@ -194,30 +220,41 @@
             canvas.height = window.innerHeight;
 
             var stars = [];
-            for(var i=0; i<60; i++) {
+            var fireworks = [];
+
+            // ကြယ်မှုန်များ
+            for(var i=0; i<80; i++) {
                 stars.push({
                     x: Math.random() * canvas.width,
                     y: Math.random() * canvas.height,
                     r: Math.random() * 1.5 + 0.5,
-                    speed: Math.random() * 0.3 + 0.1
+                    speed: Math.random() * 0.4 + 0.1
                 });
             }
 
-            function drawStars() {
-                if (!ctx || !canvas) return;
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                ctx.fillStyle = "rgba(255, 255, 255, 0.5)";
-                stars.forEach(function(s) {
-                    ctx.beginPath();
-                    ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2, true);
-                    ctx.fill();
-                    s.y += s.speed;
-                    if(s.y > canvas.height) s.y = 0;
-                });
-                requestAnimationFrame(drawStars);
+            // 🎆 အသည်းပုံ မီးပန်းမှုန်များ ဖန်တီးသည့် Function
+            function spawnFirework() {
+                var targetX = Math.random() * canvas.width;
+                var targetY = Math.random() * (canvas.height * 0.6) + 100;
+                var fwColor = neonColors[Math.floor(Math.random() * neonColors.length)];
+                
+                for(var j=0; j<25; j++) {
+                    var angle = (j / 25) * Math.PI * 2;
+                    var speed = Math.random() * 2 + 1;
+                    fireworks.push({
+                        x: targetX,
+                        y: targetY,
+                        vx: Math.cos(angle) * speed,
+                        vy: Math.sin(angle) * speed,
+                        alpha: 1,
+                        color: fwColor,
+                        size: Math.random() * 2 + 2
+                    });
+                }
             }
-            drawStars();
-        }
-    </script>
-</body>
-</html>
+
+            // ၃ စက္ကန့်တိုင်း မီးပန်းအသစ် ဖောက်ပေးခြင်း
+            setInterval(spawnFirework, 3000);
+
+            function draw() {
+                if (!ctx || !canvas) return;

@@ -6,7 +6,7 @@
     <title>For You ❤️</title>
     <style>
         body { 
-            background-color: #000; 
+            background: radial-gradient(circle, #1a0005 0%, #000000 100%); 
             overflow: hidden; 
             margin: 0; 
             font-family: 'Pyidaungsu', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -15,8 +15,66 @@
             align-items: center;
             height: 100vh;
         }
+
+        /* 🎁 စတင်ဖွင့်ချိန်တွင် ပေါ်မည့် Surprise ဘူး ဒီဇိုင်း */
+        .intro-screen {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: #000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .gift-box {
+            font-size: 6rem;
+            cursor: pointer;
+            animation: bounce 1.5s infinite alternate;
+            filter: drop-shadow(0 0 20px #ff4d6d);
+        }
+
+        .click-text {
+            color: #fff;
+            margin-top: 20px;
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+            animation: pulseText 1s infinite alternate;
+        }
+
+        @keyframes bounce {
+            0% { transform: scale(1) translateY(0); }
+            100% { transform: scale(1.1) translateY(-20px); }
+        }
+
+        @keyframes pulseText {
+            0% { opacity: 0.4; }
+            100% { opacity: 1; }
+        }
+
+        /* ပင်မအချစ်ကမ္ဘာမျက်နှာပြင် (အစပိုင်းတွင် ဖျောက်ထားမည်) */
+        .main-content {
+            display: none;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+            width: 100%;
+            height: 100%;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* ✨ နောက်ခံ ကြယ်စင်မှုန်လေးများ ဆွဲမည့်နေရာ */
+        #starfield {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
         
-        /* အလယ်က Container */
         .center-container {
             position: relative;
             display: flex;
@@ -25,126 +83,191 @@
             z-index: 10;
         }
 
-        /* 🌟 အလယ်တည့်တည့်က အသည်းပုံအကြီးကြီး Slide Show ဒီဇိုင်း */
+        /* 🌟 အလယ်တည့်တည့်က နီယွန်အသည်းပုံကြီး Slide Show */
         .big-heart-slide {
             position: absolute;
-            font-size: 15rem; /* အရမ်းကြီးပြီး ထင်ရှားစေရန် */
+            font-size: 16rem;
             color: #ff2a55;
-            filter: drop-shadow(0 0 30px rgba(255, 42, 85, 0.8));
-            animation: heartbeat 1.2s infinite ease-in-out;
-            transition: all 0.5s ease-in-out; /* ပုံစံပြောင်းချိန်တွင် နူးညံ့စေရန် */
+            filter: drop-shadow(0 0 40px rgba(255, 42, 85, 0.9));
+            animation: heartbeat 1s infinite ease-in-out;
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             user-select: none;
         }
 
-        /* အသည်းပုံကြီး ရင်ခုန်သံကဲ့သို့ တုန်ခါစေမည့် Animation */
         @keyframes heartbeat {
-            0% { transform: scale(1); filter: drop-shadow(0 0 30px rgba(255, 42, 85, 0.8)); }
-            30% { transform: scale(1.1); filter: drop-shadow(0 0 45px rgba(255, 42, 85, 1)); }
-            60% { transform: scale(0.95); filter: drop-shadow(0 0 25px rgba(255, 42, 85, 0.6)); }
-            100% { transform: scale(1); filter: drop-shadow(0 0 30px rgba(255, 42, 85, 0.8)); }
+            0% { transform: scale(1); }
+            20% { transform: scale(1.15); }
+            40% { transform: scale(0.95); }
+            60% { transform: scale(1.05); }
+            100% { transform: scale(1); }
         }
         
-        /* အသည်းပုံကြီးပေါ်တွင် ထပ်နေမည့် အချစ်စာသားဒီဇိုင်း */
         .love-text {
             position: relative;
             text-align: center;
             color: #fff;
-            font-size: 3rem;
+            font-size: 3.5rem;
             font-weight: bold;
-            text-shadow: 0 0 15px rgba(0, 0, 0, 1), 0 0 10px rgba(0, 0, 0, 1);
-            z-index: 11; /* အသည်းပုံကြီးရဲ့ အပေါ်မှာ ရှိနေစေရန် */
+            text-shadow: 0 0 20px rgba(0,0,0,1), 0 0 10px rgba(0,0,0,1);
+            z-index: 11;
             pointer-events: none;
         }
 
         .sub-text {
-            font-size: 1.8rem;
+            font-size: 2rem;
             color: #ffd670;
             margin-top: 15px;
-            text-shadow: 0 0 10px rgba(0, 0, 0, 1);
+            text-shadow: 0 0 15px rgba(0,0,0,1);
         }
 
-        /* ဘေးပတ်လည် ကြွေဆင်းမည့် အသည်းပုံများ၏ ဒီဇိုင်း */
-        .heart { 
+        /* တဖွဲဖွဲကြွေဆင်းမည့်အရာများ */
+        .falling-element { 
             position: absolute; 
             user-select: none;
             animation: fall 6s linear forwards, twinkle 1.5s ease-in-out infinite alternate;
+            z-index: 5;
         }
 
         @keyframes fall {
-            0% { transform: translateY(-120px) rotate(0deg); }
-            100% { transform: translateY(100vh) rotate(360deg); }
+            0% { transform: translateY(-120px) rotate(0deg) scale(0.5); }
+            50% { transform: translateY(50vh) rotate(180deg) scale(1.2); }
+            100% { transform: translateY(100vh) rotate(360deg) scale(0.8); }
         }
 
         @keyframes twinkle {
-            0% { opacity: 0.2; filter: drop-shadow(0 0 2px currentColor); }
-            100% { opacity: 1; filter: drop-shadow(0 0 15px currentColor); }
+            0% { opacity: 0.3; filter: drop-shadow(0 0 2px currentColor); }
+            100% { opacity: 1; filter: drop-shadow(0 0 20px currentColor); }
         }
     </style>
 </head>
 <body>
 
-    <!-- အလယ်တည့်တည့်က အသည်းပုံကြီး Slide Show နှင့် စာသား -->
-    <div class="center-container">
-        <div class="big-heart-slide" id="bigHeart">❤️</div>
+    <!-- ၁။ အစဦး Surprise ဖော်မည့် စခရင် -->
+    <div class="intro-screen" id="introScreen">
+        <div class="gift-box" onclick="startSurprise()">🎁</div>
+        <div class="click-text">မင်းအတွက် Surprise လေးမို့ နှိပ်ကြည့်ပါဦး...</div>
+    </div>
+
+    <!-- ၂။ ပင်မအချစ်ကမ္ဘာမျက်နှာပြင် -->
+    <div class="main-content" id="mainContent">
+        <canvas id="starfield"></canvas>
         
-        <div class="love-text">
-            <div>ချစ်တယ် ❤️</div>
-            <div class="sub-text">မင်းလေးတစ်ယောက်တည်းကိုပဲ...</div>
+        <div class="center-container">
+            <div class="big-heart-slide" id="bigHeart">❤️</div>
+            <div class="love-text">
+                <div>ချစ်တယ် ❤️</div>
+                <div class="sub-text">မင်းလေးတစ်ယောက်တည်းကိုပဲ...</div>
+            </div>
         </div>
     </div>
 
+    <!-- 🎵 တေးသံစုံနောက်ခံစနစ် (အလကားသုံး Web Audio) -->
+    <audio id="bgMusic" loop>
+        <source src="https://mixkit.co" type="audio/wav">
+    </audio>
+
     <script>
-        // လှပသော အရောင်အသွေး (၈) မျိုး
         const colors = ['#ff1a40', '#ff70a6', '#ff9770', '#ffd670', '#e9ff70', '#c295d8', '#70e000', '#00b4d8'];
+        // 👇 အသည်းပုံများအပြင် ပန်းပွင့်ဖတ်လေးများပါ ရောနှောထည့်သွင်းထားခြင်း
+        const romanticShapes = ['❤️', '💖', '💝', '💘', '💕', '💗', '💓', '💞', '🌸', '🌹', '✨'];
+        const bigHeartShapes = ['❤️', '💖', '💝', '💘', '💗', '💓', '💞'];
         
-        // ဘေးပတ်ပတ်လည်က အသည်းပုံလေးများအတွက် ပုံစံကွဲများ
-        const heartShapes = ['❤️', '💖', '💝', '💘', '💕', '💗', '💓', '💞'];
-
-        // 🌟 အလယ်က အသည်းပုံအကြီးကြီးအတွက် ပုံစံမျိုးစုံစာရင်း (Slide Show)
-        const bigHeartShapes = ['❤️', '💖', '💝', '💘', '💗', '💓', '💞', '💍'];
         let bigHeartIndex = 0;
-
-        // အလယ်က အသည်းပုံကြီးကို ၁.၅ စက္ကန့် (၁၅၀၀ မီလီစက္ကန့်) တိုင်း တစ်မျိုးပြီးတစ်မျိုး အလိုအလျောက် ပြောင်းလဲစေခြင်း
-        setInterval(() => {
-            const bigHeartElement = document.getElementById('bigHeart');
-            bigHeartIndex = (bigHeartIndex + 1) % bigHeartShapes.length;
-            bigHeartElement.innerText = bigHeartShapes[bigHeartIndex];
-            
-            // အရောင်ကိုပါ အလိုအလျောက် လိုက်ပြောင်းပေးခြင်း
-            bigHeartElement.style.color = colors[bigHeartIndex % colors.length];
-            bigHeartElement.style.filter = `drop-shadow(0 0 40px ${colors[bigHeartIndex % colors.length]})`;
-        }, 1500);
-
-
-        // ဘေးပတ်လည်က အသည်းပုံလေးများ အလှည့်ကျ ကြွေဆင်းစေသည့် စနစ်
         let colorIndex = 0;
         let shapeIndex = 0;
+        let animationActive = false;
 
-        function createSpecialHeart() {
-            const heart = document.createElement('div');
-            heart.classList.add('heart');
-            
-            heart.innerText = heartShapes[shapeIndex];
-            const randomColor = colors[colorIndex];
-            heart.style.color = randomColor;
-
-            shapeIndex = (shapeIndex + 1) % heartShapes.length;
-            colorIndex = (colorIndex + 1) % colors.length;
-            
-            heart.style.left = Math.random() * 90 + 5 + 'vw';
-            
-            // ဘေးကအသည်းပုံလေးတွေကို အလယ်ကအကောင်ထက် မကြီးစေရန် (၄၀ မှ ၇၀ ပစ်ဆယ်) ဝန်းကျင်ပဲ ထားပေးထားပါတယ်
-            heart.style.fontSize = Math.random() * 30 + 40 + 'px'; 
-            
-            const duration = Math.random() * 2 + 5;
-            heart.style.animationName = 'fall, twinkle';
-            heart.style.animationDuration = `${duration}s, ${Math.random() * 0.5 + 1}s`;
-            
-            document.body.appendChild(heart);
-            setTimeout(() => heart.remove(), duration * 1000);
+        // 🎁 ဘူးလေးကို နှိပ်လိုက်ချိန်တွင် အကုန်ပွင့်ထွက်လာစေမည့် Function
+        function startSurprise() {
+            document.getElementById('introScreen').style.opacity = 0;
+            setTimeout(() => {
+                document.getElementById('introScreen').style.display = 'none';
+                const main = document.getElementById('mainContent');
+                main.style.display = 'flex';
+                setTimeout(() => main.style.opacity = 1, 50);
+                
+                // သံစဉ်တိုလေး အလုပ်လုပ်ခြင်း
+                document.getElementById('bgMusic').play().catch(() => {});
+                animationActive = true;
+                initStarfield();
+                setInterval(createRomanticElement, 250);
+                startBigHeartSlide();
+            }, 1000);
         }
 
-        setInterval(createSpecialHeart, 300);
+        // အလယ်က နီယွန်အသည်းပုံကြီး Slide Show စနစ်
+        function startBigHeartSlide() {
+            setInterval(() => {
+                const bigHeartElement = document.getElementById('bigHeart');
+                bigHeartIndex = (bigHeartIndex + 1) % bigHeartShapes.length;
+                bigHeartElement.innerText = bigHeartShapes[bigHeartIndex];
+                
+                const nextColor = colors[bigHeartIndex % colors.length];
+                bigHeartElement.style.color = nextColor;
+                bigHeartElement.style.filter = `drop-shadow(0 0 50px ${nextColor})`;
+            }, 1200);
+        }
+
+        // ဘေးပတ်လည် ရောင်စုံ ပုံစံစုံ မှိတ်တုတ်မှိတ်တုတ် ကြွေဆင်းစေသည့်စနစ်
+        function createRomanticElement() {
+            if(!animationActive) return;
+            const item = document.createElement('div');
+            item.classList.add('falling-element');
+            
+            item.innerText = romanticShapes[shapeIndex];
+            const randomColor = colors[colorIndex];
+            item.style.color = randomColor;
+
+            shapeIndex = (shapeIndex + 1) % romanticShapes.length;
+            colorIndex = (colorIndex + 1) % colors.length;
+            
+            item.style.left = Math.random() * 92 + 4 + 'vw';
+            item.style.fontSize = Math.random() * 35 + 45 + 'px'; 
+            
+            const duration = Math.random() * 2 + 5;
+            item.style.animationName = 'fall, twinkle';
+            item.style.animationDuration = `${duration}s, ${Math.random() * 0.5 + 0.8}s`;
+            
+            document.body.appendChild(item);
+            setTimeout(() => item.remove(), duration * 1000);
+        }
+
+        // ✨ နောက်ခံ ကြယ်စင်လွင့်မြောခြင်း စနစ်ကို Canvas ဖြင့် ရေးဆွဲခြင်း
+        function initStarfield() {
+            const canvas = document.getElementById('starfield');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            const stars = [];
+            for(let i=0; i<80; i++) {
+                stars.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    r: Math.random() * 1.5 + 0.5,
+                    d: Math.random() * 50,
+                    speed: Math.random() * 0.5 + 0.2
+                });
+            }
+
+            function drawStars() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.fillStyle = "rgba(255, 255, 255, 0.8)";
+                stars.forEach(s => {
+                    ctx.beginPath();
+                    ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2, true);
+                    ctx.fill();
+                    
+                    s.y += s.speed;
+                    if(s.y > canvas.height) {
+                        s.y = 0;
+                        s.x = Math.random() * canvas.width;
+                    }
+                });
+                requestAnimationFrame(drawStars);
+            }
+            drawStars();
+        }
     </script>
 </body>
 </html>
